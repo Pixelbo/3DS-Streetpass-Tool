@@ -1,0 +1,21 @@
+{
+  "name": "cectool_electron",
+  "version": "0.0.1",
+  "description": "None at the moment",
+  "main": "main.js",
+  "dependencies": {
+    "electron": "^16.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "3ds",
+    "CEC",
+    "electron",
+    "streetpass"
+  ],
+  "author": "Pixelbo",
+  "license": "ISC"
+}
