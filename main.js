@@ -1,11 +1,5 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-var reading = require("./reading")
-
-function MainMenu(){
-  reading.listTitles();
-}
-
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -14,17 +8,17 @@ function createWindow () {
     darkTheme: true,
     show: false,
     webPreferences: {
-        preload: path.join(__dirname, 'preload.js')
+        preload: path.join(__dirname, 'preload.js'),
+        webviewTag: true
     }
   })
 
   win.loadFile('index.html')
 
   win.once('ready-to-show', () => {
-    win.maximize()
-    win.show()
-
-    MainMenu();
+    // win.removeMenu();
+    win.maximize();
+    win.show();
   })
 }
 
