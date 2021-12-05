@@ -13,20 +13,21 @@
     <link rel="icon" href="/favicon.ico">
 
     <link rel="stylesheet" href="css/styles.css">
+    <script src="./menu.js"></script>
 
 </head>
 
 <body>
     <div class="topnav" id="topSelector">
-        <button type="button">Import</button>
-        <button type="button">Save</button>
-        <button type="button">List of supported games</button>
-        <button type="button" class="active">About</button>
+        <button id="import" type="button">Import</button>
+        <button id="save" type="button" >Save</button>
+        <button id="list" type="button" class="" onclick="load_list();">List of supported games</button>
+        <button id="about" type="button" class="active" onclick="load_about();">About</button>
     </div>
 
-    <div class="sidenav" id="titleSelector"></div><!-- games goes here-->
+    <div class="sidenav" id="titleSelector"></div><!-- title selector goes here-->
     
-    <iframe class="main" id="main" src = "about.html" title="Main"></iframe> 
+    <iframe class="main" id="main" src = "about.html" title="Main"></iframe> <!-- varies from games !-->
 </body>
 
 </html>
