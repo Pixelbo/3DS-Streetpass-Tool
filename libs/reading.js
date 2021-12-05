@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { sandboxed } = require("process");
 
 exports.listTitles = function () {
     var titles = []
@@ -17,6 +18,9 @@ exports.listTitles = function () {
 }
 
 exports.readHex = function (file, offset_, size) {
+    offset_ = parseInt(offset_) * 2; //*2 because js counts in quartet not octet
+    size = parseInt(size) * 2;
+
     var buffer = fs.readFileSync(file, { encoding: "hex" });
     if (size == 0) {
         return buffer.slice(offset_);
@@ -31,9 +35,9 @@ exports.hexToUTF = function (HexString) {
     HexString.match(/.{4}/g).forEach((code) => {
         buffer.push(
             String.fromCodePoint(
-                                parseInt(
-                                        code.replace("00", ""), 16)));
+                parseInt(
+                    code.replace("00", ""), 16)));
     });
     buffer = buffer.join("");
-    return buffer.slice(0,-1); //delete EOF of string
+    return buffer.slice(0, -1); //delete EOF of string
 }

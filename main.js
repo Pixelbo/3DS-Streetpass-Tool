@@ -1,15 +1,15 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
-function createWindow () {
+function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     darkTheme: true,
     show: false,
     webPreferences: {
-        preload: path.join(__dirname, '/libs/preload.js'),
-        webviewTag: true
+      preload: path.join(__dirname, '/libs/preload.js'),
+      webviewTag: true,
     }
   })
 
@@ -32,4 +32,4 @@ app.whenReady().then(() => {
 })
 
 
-app.on('window-all-closed', () => {app.quit()})
+app.on('window-all-closed', () => { app.quit() })

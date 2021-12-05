@@ -14,25 +14,26 @@
 
     <link rel="stylesheet" href="css/styles.css">
     <script src="./libs/menu.js"></script>
-
 </head>
 
 <body>
     <div>
         <div class="topnav" id="topSelector">
-            <button id="import" type="button">Import</button>
-            <button id="save" type="button" >Save</button>
-            <button id="list" type="button" class="" onclick="load_list();">List of supported games</button>
-            <button id="about" type="button" class="active" onclick="load_about();">About</button>
+            <button id="import" type="button" href="">Import</button>
+            <button id="save" type="button" href="">Save</button>
+            <button id="list" type="button" href="" class="" onclick="load_list();">List of supported games</button>
+            <button id="about" type="button" href="" class="active" onclick="load_about();">About</button>
         </div>
-    
+
         <div class="sidenav" id="titleSelector"></div><!-- title selector goes here-->
     </div>
 
-    
-    <div style="height: 100%;"> <!-- height is fore relative pos!-->
-        <div id="common_div" class="common" >
+
+    <div style="height: 100%;">
+        <!-- height is fore relative pos!-->
+        <div id="common_div" class="common">
             All Common things will go there!
+            <button type="button" href="" conclick="get_app_info(00020800);">test</button>
         </div>
 
         <iframe class="main" id="main" src="about.html" title="Main"></iframe> <!-- varies from games !-->

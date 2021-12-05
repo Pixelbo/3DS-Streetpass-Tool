@@ -90,14 +90,14 @@ html, body {
 }
 
 .common_{
-    background-color: rgb(124, 124, 124);
     visibility: visible;
-
     position: relative;
-
     top: 5%;
     margin-left: 280px;
     width: calc(100% - 280px);
     height: 20%;
 
+
+    background-color: rgb(124, 124, 124);
+    
 }

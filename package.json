@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Electron app; CEC/Streetpass tool",
   "main": "main.js",
+
   "dependencies": {
     "electron": "^16.0.4"
   },

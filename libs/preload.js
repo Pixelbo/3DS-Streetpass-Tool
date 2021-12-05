@@ -1,20 +1,21 @@
 const fs = require("fs");
 var reading = require("./reading")
+var common = require("./common");
 
-!fs.existsSync("./CEC") && fs.mkdirSync("./CEC");
+!fs.existsSync("./CEC") && fs.mkdirSync("./CEC"); //Check if the dir CEC exist
 
-window.addEventListener('DOMContentLoaded', () => {
+function add_gamesToList() { //read the function name
     var titles = reading.listTitles();
     var titleList = document.getElementById("titleSelector");
     var i = 0;
-    titles.forEach( (title) => {
+    titles.forEach((title) => {
         var hex = reading.readHex(`./CEC/${title}/MessBoxName`, 0, 0);
         var titleName = reading.hexToUTF(hex);
 
         var child = document.createElement("a");
         var text = document.createTextNode(titleName);
 
-        child.setAttribute("onclick", 'load_page("./list.html");'); //`load_page("./titles/${title}.html");`);
+        child.setAttribute("onclick", `load_page("./titles/${title}.html");`);
         child.id = title
         child.href = "#"
 
@@ -23,5 +24,9 @@ window.addEventListener('DOMContentLoaded', () => {
         titleList.appendChild(child);
         i++;
     });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    add_gamesToList();
 
 })
