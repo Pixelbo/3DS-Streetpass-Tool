@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', () => {
         var child = document.createElement("a");
         var text = document.createTextNode(titleName);
 
-        child.setAttribute("onclick", `load_page("./titles/${title}.html");`);
+        child.setAttribute("onclick", 'load_page("./list.html");'); //`load_page("./titles/${title}.html");`);
         child.id = title
         child.href = "#"
 

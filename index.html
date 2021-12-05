@@ -18,16 +18,26 @@
 </head>
 
 <body>
-    <div class="topnav" id="topSelector">
-        <button id="import" type="button">Import</button>
-        <button id="save" type="button" >Save</button>
-        <button id="list" type="button" class="" onclick="load_list();">List of supported games</button>
-        <button id="about" type="button" class="active" onclick="load_about();">About</button>
+    <div>
+        <div class="topnav" id="topSelector">
+            <button id="import" type="button">Import</button>
+            <button id="save" type="button" >Save</button>
+            <button id="list" type="button" class="" onclick="load_list();">List of supported games</button>
+            <button id="about" type="button" class="active" onclick="load_about();">About</button>
+        </div>
+    
+        <div class="sidenav" id="titleSelector"></div><!-- title selector goes here-->
     </div>
 
-    <div class="sidenav" id="titleSelector"></div><!-- title selector goes here-->
     
-    <iframe class="main" id="main" src = "about.html" title="Main"></iframe> <!-- varies from games !-->
+    <div style="height: 100%;"> <!-- height is fore relative pos!-->
+        <div id="common_div" class="common" >
+                fs
+        </div>
+
+        <iframe class="main" id="main" src="about.html" title="Main"></iframe> <!-- varies from games !-->
+    </div>
+
 </body>
 
 </html>
