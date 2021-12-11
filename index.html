@@ -10,17 +10,15 @@
     <meta name="description" content="CEC">
     <meta name="author" content="Pixelbo">
 
-
-
     <link rel="stylesheet" href="css/styles.css">
     <script src="./libs/menu.js"></script>
 </head>
 
 <body>
     <div>
-        <div class="topnav" id="topSelector">
-            <button id="import" type="button" href="">Import</button>
-            <button id="save" type="button" href="">Save</button>
+        <div class="topnav" id="topSelector"> <!-- "main" menu-->
+            <button id="import" type="button" href="">Import</button> <!-- idk-->
+            <button id="save" type="button" href="">Save</button> <!-- save changes = get values from option and write-->
             <button id="list" type="button" href="" class="" onclick="load_list();">List of supported games</button>
             <button id="about" type="button" href="" class="active" onclick="load_about();">About</button>
         </div>
@@ -29,14 +27,17 @@
     </div>
 
 
-    <div style="height: 100%;">
-        <!-- height is fore relative pos!-->
-        <div id="common_div" class="common">
-            All Common things will go there!
-            <button type="button" href="" conclick="get_app_info(00020800);">test</button>
+    <div style="height: 100%;"> <!-- height is fore relative pos! for css-->
+       
+        <div id="common_div" class="common"> <!-- well it can be implamented in the iframe BUT I'm lazy and just hiding with css works-->
+            <p id="titleID"></p>
+            <p id="date_accessed"></p>
+            <p id="date_opened"></p>
+            <p id="inbox"></p>
+            <p id="outbox"></p>
         </div>
 
-        <iframe class="main" id="main" src="about.html" title="Main"></iframe> <!-- varies from games !-->
+        <iframe class="main" id="main" src="about.html" title="Main"></iframe> <!-- varies from games/situation, you can do without iframe but I'm noob !-->
     </div>
 
 </body>

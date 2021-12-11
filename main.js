@@ -1,3 +1,5 @@
+//File for starting the gui, nothing related to events
+
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 

@@ -1,3 +1,5 @@
+//File that'll preload; everything related to how behavior works/events
+
 const fs = require("fs");
 var reading = require("./reading")
 var common = require("./common");
@@ -28,5 +30,8 @@ function add_gamesToList() { //read the function name
 
 window.addEventListener('DOMContentLoaded', () => {
     add_gamesToList();
+});
 
-})
+window.addEventListener("reloadCommonEvent", (e) => {
+    common.set_app_info(e.detail); //Set the common infos
+});

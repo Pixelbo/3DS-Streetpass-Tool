@@ -1,5 +1,8 @@
 const fs = require("fs");
-const { sandboxed } = require("process");
+
+exports.load_file = function(path_to_file) {
+    return fs.readFileSync(path_to_file, { encoding: "hex" });
+}
 
 exports.listTitles = function () {
     var titles = []
@@ -17,11 +20,13 @@ exports.listTitles = function () {
     }
 }
 
-exports.readHex = function (file, offset_, size) {
+exports.readHex = function (data, offset_, size, loaded) {
     offset_ = parseInt(offset_) * 2; //*2 because js counts in quartet not octet
     size = parseInt(size) * 2;
 
-    var buffer = fs.readFileSync(file, { encoding: "hex" });
+    if(!loaded) {var buffer = fs.readFileSync(data, { encoding: "hex" });
+    }else{var buffer = data}
+    
     if (size == 0) {
         return buffer.slice(offset_);
     } else {
