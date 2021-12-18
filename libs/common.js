@@ -6,7 +6,7 @@ var reading = require("./reading")
 function get_app_info(id) {
     var file_data = reading.load_file(`./CEC/${id}/MessBoxInfo`);
 
-    var title_id = reading.readHex(file_data, 0x4, 0x4, true);
+    var title_id = reading.readHex(file_data, 0x4, 0x4, true).match(/../g).reverse().join('');
 
     var timestamp_acessed = {
         "year": parseInt(reading.readHex(file_data, 0x34, 0x2, true).match(/../g).reverse().join(''), 16), // Big endian to little endian

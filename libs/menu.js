@@ -1,14 +1,28 @@
 //This is a "clean" js file without node that serves for changing aspect of the page when buttons are pressed
 
-var iframe, btn_about, btn_list, common_div;
+var iframe, btn_about, btn_list, title_navbar;
 
 
 window.addEventListener('DOMContentLoaded', () => { //Define vars
     iframe = document.getElementById("main");
     btn_about = document.getElementById("about");
     btn_list = document.getElementById("list");
-    common_div = document.getElementById("common_div");
+    title_navbar = document.getElementById("titleNavbar");
 });
+
+function toggle_dropdown() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+  
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+    if (!e.target.matches('.dropbtn')) {
+        var myDropdown = document.getElementById("myDropdown");
+        if (myDropdown.classList.contains('show')) {
+            myDropdown.classList.remove('show');
+        }
+    }
+}
 
 function clear_active() { //Clear colors on te game selector
     var nodes = document.getElementById('titleSelector').childNodes;
@@ -20,24 +34,36 @@ function clear_active() { //Clear colors on te game selector
 }
 
 function FullOrCommon(full) { // this change the iframe and the div for full page (for list and about) Splited or not
-    if (full) { //Class that'll hide the common
+    if (full) { //Class that'll hide the topnav²
         iframe.className = "main";
-        common_div.className = "common";
-    } else { //show common
+        if (title_navbar.classList.contains('show')) {
+            title_navbar.classList.remove('show');
+        }
+    } else { //show topnav²
         iframe.className = "main_";
-        common_div.className = "common_";
+        if (!title_navbar.classList.contains('show')) {
+            title_navbar.classList.toggle('show');
+        }
+        
     }
 }
 
-function load_page(url) { //For the iframe
-    iframe.src = url;
-    FullOrCommon(false); //show common
+function load_common(title_id){ //Load the page that is common for every game
+    iframe.src = "./titles/common.html";
+    FullOrCommon(false); //show topnav²
 
     btn_list.className = ""; //Colors for the menu
     btn_about.className = "";
-    document.getElementById(url.slice(9, 17)).className = "active";
+    document.getElementById(title_id).className = "active";
 
-    window.titleID = url.slice(9, 17); //Global var for the title ID
+    window.titleID = title_id; //Global var for the title ID
+    const reloadCommonEvent = new CustomEvent("reloadCommonEvent", {detail: window.titleID});//New page means reaload common infos
+    window.dispatchEvent(reloadCommonEvent); 
+}
+
+function load_game(url) { //load the pag that is specific to the game
+    iframe.src = url;
+
     const reloadCommonEvent = new CustomEvent("reloadCommonEvent", {detail: window.titleID});//New page means reaload common infos
     window.dispatchEvent(reloadCommonEvent); 
 }

@@ -11,11 +11,15 @@
     <meta name="author" content="Pixelbo">
 
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles_topnav.css">
+    <link rel="stylesheet" href="css/styles_dropdown.css">
+    <link rel="stylesheet" href="css/sytles_sidenav.css">
+
     <script src="./libs/menu.js"></script>
 </head>
 
 <body>
-    <div>
+    <div> <!-- main navigation-->
         <div class="topnav" id="topSelector"> <!-- "main" menu-->
             <button id="import" type="button" href="">Import</button> <!-- idk-->
             <button id="save" type="button" href="">Save</button> <!-- save changes = get values from option and write-->
@@ -26,19 +30,23 @@
         <div class="sidenav" id="titleSelector"></div><!-- title selector goes here-->
     </div>
 
-
-    <div style="height: 100%;"> <!-- height is fore relative pos! for css-->
-       
-        <div id="common_div" class="common"> <!-- well it can be implamented in the iframe BUT I'm lazy and just hiding with css works-->
-            <p id="titleID"></p>
-            <p id="date_accessed"></p>
-            <p id="date_opened"></p>
-            <p id="inbox"></p>
-            <p id="outbox"></p>
+    
+    <div id="titleNavbar" class="title-navbar">
+        <a href="#home">Home</a>
+        <a href="#news">News</a>
+        <div class="dropdown">
+        <button class="dropbtn" onclick="toggle_dropdown()">Dropdown
+        <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="myDropdown">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
         </div>
-
-        <iframe class="main" id="main" src="about.html" title="Main"></iframe> <!-- varies from games/situation, you can do without iframe but I'm noob !-->
+        </div> 
     </div>
+
+    <iframe class="main" id="main" src="about.html" title="Main"></iframe> <!-- varies from games/situation, you can do without iframe but I'm noob !-->
 
 </body>
 

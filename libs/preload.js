@@ -17,7 +17,7 @@ function add_gamesToList() { //read the function name
         var child = document.createElement("a");
         var text = document.createTextNode(titleName);
 
-        child.setAttribute("onclick", `load_page("./titles/${title}.html");`);
+        child.setAttribute("onclick", `load_common("${title}");`);
         child.id = title
         child.href = "#"
 
@@ -33,5 +33,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener("reloadCommonEvent", (e) => {
-    common.set_app_info(e.detail); //Set the common infos
+    //common.set_app_info(e.detail); //Set the common infos
 });
