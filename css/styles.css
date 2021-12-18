@@ -23,10 +23,10 @@ html, body {
     z-index: 2;
     position: absolute;
 
-    top: 10%;
+    top: 5%;
     margin-left: 280px;
     width: calc(100% - 280px);
-    height: calc(100% - 90px); 
+    height: calc(100% - 43px); 
     border: none;
 }
 

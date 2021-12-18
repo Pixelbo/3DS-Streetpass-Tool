@@ -7,11 +7,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="../css/styles_iframe.css">
+    <link rel="stylesheet" href="../css/styles_dropdown.css">
 
+    <script src="../libs/menu_dropdown.js"></script>
 </head>
 
 <body>
-    COMMON
+    <div id="titleNavbar" class="title-navbar">
+        <a href="#box">Box Information</a>
+        <a href="#game">Game tool</a>
+
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggle_dropdown('dropdown_input')">Input Messages</button>
+            <div class="dropdown-content" id="dropdown_input">
+                <a href="#">Inputs goes here</a>
+            </div>
+        </div> 
+        
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggle_dropdown('dropdown_output')">Output Messages</button>
+            <div class="dropdown-content" id="dropdown_output">
+                <a href="#">Outputs goes here</a>
+            </div>
+        </div> 
+    </div>
+
+    <p>COMMON</p>
 </body>
 
 </html>

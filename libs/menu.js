@@ -1,28 +1,13 @@
 //This is a "clean" js file without node that serves for changing aspect of the page when buttons are pressed
 
-var iframe, btn_about, btn_list, title_navbar;
+var iframe, btn_about, btn_list;
 
 
 window.addEventListener('DOMContentLoaded', () => { //Define vars
     iframe = document.getElementById("main");
     btn_about = document.getElementById("about");
     btn_list = document.getElementById("list");
-    title_navbar = document.getElementById("titleNavbar");
 });
-
-function toggle_dropdown() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-  
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(e) {
-    if (!e.target.matches('.dropbtn')) {
-        var myDropdown = document.getElementById("myDropdown");
-        if (myDropdown.classList.contains('show')) {
-            myDropdown.classList.remove('show');
-        }
-    }
-}
 
 function clear_active() { //Clear colors on te game selector
     var nodes = document.getElementById('titleSelector').childNodes;
@@ -36,15 +21,8 @@ function clear_active() { //Clear colors on te game selector
 function FullOrCommon(full) { // this change the iframe and the div for full page (for list and about) Splited or not
     if (full) { //Class that'll hide the topnav²
         iframe.className = "main";
-        if (title_navbar.classList.contains('show')) {
-            title_navbar.classList.remove('show');
-        }
     } else { //show topnav²
         iframe.className = "main_";
-        if (!title_navbar.classList.contains('show')) {
-            title_navbar.classList.toggle('show');
-        }
-        
     }
 }
 
