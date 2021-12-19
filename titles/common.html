@@ -14,17 +14,18 @@
 
 <body>
     <div id="titleNavbar" class="title-navbar">
-        <a href="#box">Box Information</a>
-        <a href="#game">Game tool</a>
+        <a href="#box">Box Information</a><!-- common infos: common.html#box-->
+        <a href="#game" onclick="console.log(window.parent.window.TitleID)">Game tool</a> <!-- Sets iframe to {title}.html-->
 
-        <div class="dropdown">
+
+        <div class="dropdown"> <!--common infos : common.html#inputID-->
             <button class="dropbtn" onclick="toggle_dropdown('dropdown_input')">Input Messages</button>
             <div class="dropdown-content" id="dropdown_input">
                 <a href="#">Inputs goes here</a>
             </div>
         </div> 
         
-        <div class="dropdown">
+        <div class="dropdown"><!-- common infos#outputID-->
             <button class="dropbtn" onclick="toggle_dropdown('dropdown_output')">Output Messages</button>
             <div class="dropdown-content" id="dropdown_output">
                 <a href="#">Outputs goes here</a>
@@ -33,6 +34,11 @@
     </div>
 
     <p>COMMON</p>
+    <p id="titleID"></p>
+    <p id="date_accessed"></p>
+    <p id="date_opened"></p>
+    <p id="inbox"></p>
+    <p id="outbox"></p>
 </body>
 
 </html>

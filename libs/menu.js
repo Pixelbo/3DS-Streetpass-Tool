@@ -19,7 +19,7 @@ function clear_active() { //Clear colors on te game selector
 }
 
 function FullOrCommon(full) { // this change the iframe and the div for full page (for list and about) Splited or not
-    if (full) { //Class that'll hide the topnav²
+    if (full) { 
         iframe.className = "main";
     } else { //show topnav²
         iframe.className = "main_";
@@ -35,15 +35,11 @@ function load_common(title_id){ //Load the page that is common for every game
     document.getElementById(title_id).className = "active";
 
     window.titleID = title_id; //Global var for the title ID
-    const reloadCommonEvent = new CustomEvent("reloadCommonEvent", {detail: window.titleID});//New page means reaload common infos
-    window.dispatchEvent(reloadCommonEvent); 
+
 }
 
-function load_game(url) { //load the pag that is specific to the game
+function load_game(url) { //load the page that is specific to the game
     iframe.src = url;
-
-    const reloadCommonEvent = new CustomEvent("reloadCommonEvent", {detail: window.titleID});//New page means reaload common infos
-    window.dispatchEvent(reloadCommonEvent); 
 }
 
 function load_list() { //Seperate function cause of the active color
@@ -60,4 +56,9 @@ function load_about() { //Seperate function cause of the active color
     btn_about.className = "active";
     FullOrCommon(true);
     clear_active();
+}
+
+function iframe_reload_envent(){
+    const reloadIframeEvent = new CustomEvent("reloadIframeEvent", {detail: window.titleID});//New page means reaload common infos
+    window.dispatchEvent(reloadIframeEvent); 
 }

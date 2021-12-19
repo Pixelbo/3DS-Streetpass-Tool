@@ -2,8 +2,19 @@
 //Equals to every file that is not in the inbox or outbox folders (Messboxinfo, inboxonfo, ...)
 
 var reading = require("./reading")
+var path = require("path")
 
-function get_app_info(id) {
+window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('reloadIframeEvent', (e) => {
+        if(path.parse(document.getElementById("main").contentWindow.document.URL).name == "common"){ //If the name of the url of the iframe is common then:
+            set_app_info(e.detail); //Set the common infos
+        }
+
+    });
+});
+
+
+function get_app_info(id){
     var file_data = reading.load_file(`./CEC/${id}/MessBoxInfo`);
 
     var title_id = reading.readHex(file_data, 0x4, 0x4, true).match(/../g).reverse().join('');
@@ -57,7 +68,7 @@ function get_app_info(id) {
     return [title_id, timestamp_acessed, timestamp_opened, inbox_infos, outbox_infos]
 }
 
-exports.set_app_info = function(id){
+function set_app_info(id){
     var data = get_app_info(id);
     var date_accessed = new Date(
         data[1]["year"],
@@ -75,16 +86,18 @@ exports.set_app_info = function(id){
         data[2]["time"][1],
         data[2]["time"][2]
     );
+ 
+    var iframe = document.getElementById("main").contentWindow;
 
-    document.getElementById("titleID").innerText = data[0];
+    iframe.document.getElementById("titleID").innerText = data[0];
 
-    document.getElementById("date_accessed").innerText = "Date accessed: " + date_accessed.toDateString();
-    document.getElementById("date_opened").innerText = "Date opened: " + date_opened.toDateString();
+    iframe.document.getElementById("date_accessed").innerText = "Date accessed: " + date_accessed.toDateString();
+    iframe.document.getElementById("date_opened").innerText = "Date opened: " + date_opened.toDateString();
     
-    document.getElementById("inbox").innerText = 
+    iframe.document.getElementById("inbox").innerText = 
     `Inbox: -Box Size: ${data[3]["box_data"]}, MaxBoxSize: ${data[3]["max_box_data"]}-Num of Messages: ${data[3]["curr_mess"]}, MaxMessages: ${data[3]["max_mess"]}, MaxMessSize: ${data[3]["max_mess_size"]}`;
 
-    document.getElementById("outbox").innerText = 
+    iframe.document.getElementById("outbox").innerText = 
     `Outbox: -Box Size: ${data[4]["box_data"]}, MaxBoxSize: ${data[4]["max_box_data"]}-Num of Messages: ${data[4]["curr_mess"]}, MaxMessages: ${data[4]["max_mess"]}, MaxMessSize: ${data[4]["max_mess_size"]}`;
 
 }
