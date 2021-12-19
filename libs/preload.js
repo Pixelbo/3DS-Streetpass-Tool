@@ -7,7 +7,7 @@ var common = require("./common")
 !fs.existsSync("./CEC") && fs.mkdirSync("./CEC"); //Check if the dir CEC exist
 
 function add_gamesToList() { //read the function name
-    var titles = reading.listTitles();
+    var titles = reading.listDirs("./CEC/");
     var titleList = document.getElementById("titleSelector");
     var i = 0;
     titles.forEach((title) => {

@@ -14,31 +14,38 @@
 
 <body>
     <div id="titleNavbar" class="title-navbar">
-        <a href="#box">Box Information</a><!-- common infos: common.html#box-->
-        <a href="#game" onclick="console.log(window.parent.window.TitleID)">Game tool</a> <!-- Sets iframe to {title}.html-->
-
+        <a href="#box" style="background-color: rgb(100, 0, 0);">Box Information</a><!-- common infos: common.html#box-->
+        <a href="#game" onclick="load_game(window.parent.window.titleID)">Game tool</a> <!-- Sets iframe to {title}.html-->
 
         <div class="dropdown"> <!--common infos : common.html#inputID-->
-            <button class="dropbtn" onclick="toggle_dropdown('dropdown_input')">Input Messages</button>
+            <button class="dropbtn dropbtnI" onclick="toggle_dropdown('dropdown_input')">Input Messages</button>
             <div class="dropdown-content" id="dropdown_input">
-                <a href="#">Inputs goes here</a>
             </div>
         </div> 
         
         <div class="dropdown"><!-- common infos#outputID-->
-            <button class="dropbtn" onclick="toggle_dropdown('dropdown_output')">Output Messages</button>
+            <button class="dropbtn dropbtnO" onclick="toggle_dropdown('dropdown_output')">Output Messages</button>
             <div class="dropdown-content" id="dropdown_output">
-                <a href="#">Outputs goes here</a>
             </div>
         </div> 
     </div>
+    
+    <div id="Main_Common" class="Main_Common">
+        <p>COMMON</p>
+        <p id="titleID"></p>
+        <p id="date_accessed"></p>
+        <p id="date_opened"></p>
+        <p id="inbox"></p>
+        <p id="outbox"></p>
+    </div>
 
-    <p>COMMON</p>
-    <p id="titleID"></p>
-    <p id="date_accessed"></p>
-    <p id="date_opened"></p>
-    <p id="inbox"></p>
-    <p id="outbox"></p>
+    <div id="Main_Inbox" class="Main_Inbox">
+        <p>Inbox</p>
+    </div>
+
+    <div id="Main_Outbox" class="Main_Outbox">
+        <p>Outbox</p>
+    </div>
 </body>
 
 </html>

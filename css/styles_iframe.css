@@ -1,4 +1,28 @@
-body {
+html, body {
     background-color: rgb(85, 85, 85);
     margin: 0px;
+}
+
+.Main_Common{
+    position: absolute;
+    background-color:rgb(85, 85, 85);
+    top: 6%;
+    width: 100%;
+    height: 90%;
+}
+
+.Main_Inbox{
+    position: absolute;
+    background-color: rgb(97, 97, 97);
+    top:96%;
+    width: 100%;
+    height: 90%;
+}
+
+.Main_Outbox{
+    position: absolute;
+    background-color: rgb(119, 119, 119);
+    top:186%;
+    width: 100%;
+    height: 90%;
 }

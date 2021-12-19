@@ -4,28 +4,42 @@ exports.load_file = function(path_to_file) {
     return fs.readFileSync(path_to_file, { encoding: "hex" });
 }
 
-exports.listTitles = function () {
-    var titles = []
-    fs.readdirSync("./CEC").forEach((dir) => {
-
-        if (fs.statSync("./CEC/" + dir).isDirectory()) {
-            titles.push(dir)
+exports.listDirs = function (path) {
+    var dirs = []
+    fs.readdirSync(path).forEach((dir) => {
+        if (fs.statSync(path + dir).isDirectory()) {
+            dirs.push(dir)
         }
     })
 
-    if (titles.length === 0) {
+    if (dirs.length === 0) {
         return false;
     } else {
-        return titles;
+        return dirs;
     }
 }
 
-exports.readHex = function (data, offset_, size, loaded) {
+exports.listFiles = function (path) {
+    var files = []
+    fs.readdirSync(path).forEach((file) => {
+        if (fs.statSync(path + file).isFile()) {
+            files.push(file)
+        }
+    })
+
+    if (files.length === 0) {
+        return false;
+    } else {
+        return files;
+    }
+}
+
+exports.readHex = function (data_or_path, offset_, size, loaded) {
     offset_ = parseInt(offset_) * 2; //*2 because js counts in quartet not octet
     size = parseInt(size) * 2;
 
-    if(!loaded) {var buffer = fs.readFileSync(data, { encoding: "hex" });
-    }else{var buffer = data}
+    if(!loaded) {var buffer = fs.readFileSync(data_or_path, { encoding: "hex" });
+    }else{var buffer = data_or_path}
     
     if (size == 0) {
         return buffer.slice(offset_);

@@ -2,19 +2,28 @@
 //Equals to every file that is not in the inbox or outbox folders (Messboxinfo, inboxonfo, ...)
 
 var reading = require("./reading")
-var path = require("path")
+var path = require("path");
+
+var iframeDOC, dropdown_in, dropdown_out;
 
 window.addEventListener('DOMContentLoaded', () => {
-    window.addEventListener('reloadIframeEvent', (e) => {
-        if(path.parse(document.getElementById("main").contentWindow.document.URL).name == "common"){ //If the name of the url of the iframe is common then:
-            set_app_info(e.detail); //Set the common infos
-        }
+    iframeDOC = document.getElementById("main").contentWindow;
 
+    window.addEventListener('reloadIframeEvent', (e) => {
+        if (path.parse(iframeDOC.document.URL).name == "common") {
+            //Called when the IFrame is on hte common page
+
+            dropdown_in = iframeDOC.document.getElementById("dropdown_input");
+            dropdown_out = iframeDOC.document.getElementById("dropdown_output");
+
+            set_app_info(e.detail); //Set the common infos
+            set_inoutbox_info(e.detail); //Set the messages in the dropdown
+        }
     });
 });
 
 
-function get_app_info(id){
+function get_app_info(id) {
     var file_data = reading.load_file(`./CEC/${id}/MessBoxInfo`);
 
     var title_id = reading.readHex(file_data, 0x4, 0x4, true).match(/../g).reverse().join('');
@@ -68,11 +77,11 @@ function get_app_info(id){
     return [title_id, timestamp_acessed, timestamp_opened, inbox_infos, outbox_infos]
 }
 
-function set_app_info(id){
+function set_app_info(id) {
     var data = get_app_info(id);
     var date_accessed = new Date(
         data[1]["year"],
-        data[1]["date"][0]-1, //Cause date module begin at 0
+        data[1]["date"][0] - 1, //Cause date module begin at 0
         data[1]["date"][1],
         data[1]["time"][0],
         data[1]["time"][1],
@@ -80,24 +89,59 @@ function set_app_info(id){
     );
     var date_opened = new Date(
         data[2]["year"],
-        data[2]["date"][0]-1, //Cause date module begin at 0
+        data[2]["date"][0] - 1, //Cause date module begin at 0
         data[2]["date"][1],
         data[2]["time"][0],
         data[2]["time"][1],
         data[2]["time"][2]
     );
- 
+
     var iframe = document.getElementById("main").contentWindow;
 
     iframe.document.getElementById("titleID").innerText = data[0];
 
     iframe.document.getElementById("date_accessed").innerText = "Date accessed: " + date_accessed.toDateString();
     iframe.document.getElementById("date_opened").innerText = "Date opened: " + date_opened.toDateString();
-    
-    iframe.document.getElementById("inbox").innerText = 
-    `Inbox: -Box Size: ${data[3]["box_data"]}, MaxBoxSize: ${data[3]["max_box_data"]}-Num of Messages: ${data[3]["curr_mess"]}, MaxMessages: ${data[3]["max_mess"]}, MaxMessSize: ${data[3]["max_mess_size"]}`;
 
-    iframe.document.getElementById("outbox").innerText = 
-    `Outbox: -Box Size: ${data[4]["box_data"]}, MaxBoxSize: ${data[4]["max_box_data"]}-Num of Messages: ${data[4]["curr_mess"]}, MaxMessages: ${data[4]["max_mess"]}, MaxMessSize: ${data[4]["max_mess_size"]}`;
+    iframe.document.getElementById("inbox").innerText =
+        `Inbox: -Box Size: ${data[3]["box_data"]}, MaxBoxSize: ${data[3]["max_box_data"]}-Num of Messages: ${data[3]["curr_mess"]}, MaxMessages: ${data[3]["max_mess"]}, MaxMessSize: ${data[3]["max_mess_size"]}`;
+
+    iframe.document.getElementById("outbox").innerText =
+        `Outbox: -Box Size: ${data[4]["box_data"]}, MaxBoxSize: ${data[4]["max_box_data"]}-Num of Messages: ${data[4]["curr_mess"]}, MaxMessages: ${data[4]["max_mess"]}, MaxMessSize: ${data[4]["max_mess_size"]}`;
+
+}
+
+function set_inoutbox_info(id){
+    var Inboxes = reading.listFiles(path.normalize(`./CEC/${id}/Inbox/`));
+
+    Inboxes.forEach(inbox => {
+        var inID = reading.readHex(path.normalize(`./CEC/${id}/Inbox/${inbox}`), 0x20, 0x8, false);
+
+        var ina = document.createElement("a");
+
+        var text = document.createTextNode(inID);
+        ina.appendChild(text);
+
+        ina.id = inID;
+        ina.href = `?id=${inID}#Main_Inbox`;
+        
+        dropdown_in.appendChild(ina);
+    });
+
+    var Outboxes = reading.listFiles(path.normalize(`./CEC/${id}/Outbox/`));
+
+    Outboxes.forEach(outbox => {
+        var outID = reading.readHex(path.normalize(`./CEC/${id}/Outbox/${outbox}`), 0x20, 0x8, false);
+
+        var outa = document.createElement("a");
+
+        var text = document.createTextNode(outID);
+        outa.appendChild(text);
+
+        outa.id = outID;
+        outa.href = `?id=${outID}#Main_Inbox`;
+        
+        dropdown_out.appendChild(outa);
+    });
 
 }

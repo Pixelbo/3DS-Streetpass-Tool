@@ -38,10 +38,6 @@ function load_common(title_id){ //Load the page that is common for every game
 
 }
 
-function load_game(url) { //load the page that is specific to the game
-    iframe.src = url;
-}
-
 function load_list() { //Seperate function cause of the active color
     iframe.src = "./list.html";
     btn_list.className = "active";
