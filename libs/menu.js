@@ -54,7 +54,7 @@ function load_about() { //Seperate function cause of the active color
     clear_active();
 }
 
-function iframe_reload_envent(){
+function iframe_reload_event(){
     const reloadIframeEvent = new CustomEvent("reloadIframeEvent", {detail: window.titleID});//New page means reaload common infos
     window.dispatchEvent(reloadIframeEvent); 
 }

@@ -41,3 +41,9 @@ function load_game(ID) { //load the page that is specific to the game
 function load_common() { //not the same common as menu.js!
     iframe.src = `./titles/common.html`;
 }
+
+function reload_Common_Event(mess_id, input){
+    var param = (input ? "I" : "O") + mess_id
+    const reloadCommonEvent = new CustomEvent("reloadCommonEvent", {detail:param});
+    window.parent.dispatchEvent(reloadCommonEvent); 
+}

@@ -12,16 +12,28 @@ window.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('reloadIframeEvent', (e) => {
         if (path.parse(iframeDOC.document.URL).name == "common") {
             //Called when the IFrame is on hte common page
+            window.titleID = e.detail;
 
             dropdown_in = iframeDOC.document.getElementById("dropdown_input");
             dropdown_out = iframeDOC.document.getElementById("dropdown_output");
 
-            set_app_info(e.detail); //Set the common infos
-            set_inoutbox_info(e.detail); //Set the messages in the dropdown
+            set_app_info(window.titleID); //Set the common infos
+            set_inoutdropbox_info(window.titleID); //Set the messages in the dropdown
         }
     });
-});
 
+    window.addEventListener("reloadCommonEvent", (e) => {
+        var IorO = (e.detail.slice(0,1)==="I") ? true : false;
+        var mess_id = e.detail.slice(1,17);
+
+        if(IorO){
+
+        }else{
+
+        }
+
+    });
+});
 
 function get_app_info(id) {
     var file_data = reading.load_file(`./CEC/${id}/MessBoxInfo`);
@@ -111,11 +123,12 @@ function set_app_info(id) {
 
 }
 
-function set_inoutbox_info(id){
+function set_inoutdropbox_info(id){
     var Inboxes = reading.listFiles(path.normalize(`./CEC/${id}/Inbox/`));
+    var inID;
 
     Inboxes.forEach(inbox => {
-        var inID = reading.readHex(path.normalize(`./CEC/${id}/Inbox/${inbox}`), 0x20, 0x8, false);
+        inID = reading.readHex(path.normalize(`./CEC/${id}/Inbox/${inbox}`), 0x20, 0x8, false);
 
         var ina = document.createElement("a");
 
@@ -123,15 +136,18 @@ function set_inoutbox_info(id){
         ina.appendChild(text);
 
         ina.id = inID;
-        ina.href = `?id=${inID}#Main_Inbox`;
-        
+        ina.href = "#Main_Inbox";
+        ina.setAttribute("onclick", `reload_Common_Event("${inID}", true);`);
+
         dropdown_in.appendChild(ina);
     });
+    set_input_info(id, inID)
 
     var Outboxes = reading.listFiles(path.normalize(`./CEC/${id}/Outbox/`));
+    var outID;
 
     Outboxes.forEach(outbox => {
-        var outID = reading.readHex(path.normalize(`./CEC/${id}/Outbox/${outbox}`), 0x20, 0x8, false);
+        outID = reading.readHex(path.normalize(`./CEC/${id}/Outbox/${outbox}`), 0x20, 0x8, false);
 
         var outa = document.createElement("a");
 
@@ -139,9 +155,25 @@ function set_inoutbox_info(id){
         outa.appendChild(text);
 
         outa.id = outID;
-        outa.href = `?id=${outID}#Main_Inbox`;
+        outa.href = "#Main_Inbox";
+        outa.setAttribute("onclick", `reload_Common_Event("${outID}", false);`);
         
         dropdown_out.appendChild(outa);
     });
+    set_output_info(id, outID);
+    
+}
+
+function get_mess_info(game_id, id, IorO){
+
+}
+
+function set_input_info(game_id, id){
+    var data = get_mess_info(game_id, id, true);
+
+}
+
+function set_output_info(game_id, id){
+    var data = get_mess_info(game_id, id, false);
 
 }
