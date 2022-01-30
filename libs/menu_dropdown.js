@@ -15,7 +15,6 @@ window.onclick = function(e) {
     var dropdown_input = document.getElementById("dropdown_input");
     var dropdown_output = document.getElementById("dropdown_output");
 
-
     if(!e.target.matches('.dropbtnI') && !e.target.matches('.dropbtnO')){ //Cool garbage that works
         if (dropdown_input.classList.contains('show')) {
             dropdown_input.classList.remove('show');

@@ -3,11 +3,8 @@
   "version": "0.1.0",
   "description": "Electron app; CEC/Streetpass tool",
   "main": "main.js",
-
-  "dependencies": {
-    "electron": "^16.0.4"
-  },
   "devDependencies": {
+    "electron": "^16.0.8",
     "electron-builder": "^22.14.5"
   },
   "scripts": {
@@ -20,5 +17,13 @@
     "streetpass"
   ],
   "author": "Pixelbo",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pixelbo/CECTool_Electron.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Pixelbo/CECTool_Electron/issues"
+  },
+  "homepage": "https://github.com/Pixelbo/CECTool_Electron#readme"
 }

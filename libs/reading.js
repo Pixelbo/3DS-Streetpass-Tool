@@ -60,3 +60,8 @@ exports.hexToUTF = function (HexString) {
     buffer = buffer.join("");
     return buffer.slice(0, -1); //delete EOF of string
 }
+
+exports.reverse_endian = function (num) {
+    var reversed = parseInt(num.match(/../g).reverse().join(''), 16);
+    return reversed;
+}

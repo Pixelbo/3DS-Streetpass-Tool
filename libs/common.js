@@ -6,10 +6,12 @@ var path = require("path");
 
 var iframeDOC, dropdown_in, dropdown_out;
 
+
+//////////////////////////////////////////////////////////////Init and load
 window.addEventListener('DOMContentLoaded', () => {
     iframeDOC = document.getElementById("main").contentWindow;
 
-    window.addEventListener('reloadIframeEvent', (e) => {
+    window.addEventListener('reloadIframeEvent', (e) => {/////////Called when the iframe needs to be reloaded (like changing page)
         if (path.parse(iframeDOC.document.URL).name == "common") {
             //Called when the IFrame is on hte common page
             window.titleID = e.detail;
@@ -22,73 +24,74 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    window.addEventListener("reloadCommonEvent", (e) => {
+    window.addEventListener("reloadCommonEvent", (e) => { /////////Called when it needs to be reloaded (info like inputs or outputs)
         var IorO = (e.detail.slice(0,1)==="I") ? true : false;
-        var mess_id = e.detail.slice(1,17);
-
+        var mess_id = e.detail.slice(1,);
         if(IorO){
-
+            set_input_info(window.titleID, mess_id);
         }else{
-
+            set_output_info(window.titleID, mess_id);
         }
 
     });
 });
 
+///////////////////////////////////////////////////////////////////Get the box infos (last time opened a game opened it, ...)
 function get_app_info(id) {
     var file_data = reading.load_file(`./CEC/${id}/MessBoxInfo`);
 
     var title_id = reading.readHex(file_data, 0x4, 0x4, true).match(/../g).reverse().join('');
 
     var timestamp_acessed = {
-        "year": parseInt(reading.readHex(file_data, 0x34, 0x2, true).match(/../g).reverse().join(''), 16), // Big endian to little endian
+        "year": reading.reverse_endian(reading.readHex(file_data, 0x34, 0x2, true)), // Big endian to little endian
         "date": [
-            parseInt(reading.readHex(file_data, 0x38, 0x1, true).match(/../g).reverse().join(''), 16), //Maybe doing it to function shrug
-            parseInt(reading.readHex(file_data, 0x39, 0x1, true).match(/../g).reverse().join(''), 16)
+            reading.reverse_endian(reading.readHex(file_data, 0x38, 0x1, true)) , //Maybe doing it to function shrug
+            reading.reverse_endian(reading.readHex(file_data, 0x39, 0x1, true)) 
         ],
         "time": [
-            parseInt(reading.readHex(file_data, 0x3B, 0x1, true).match(/../g).reverse().join(''), 16),
-            parseInt(reading.readHex(file_data, 0x3C, 0x1, true).match(/../g).reverse().join(''), 16),
-            parseInt(reading.readHex(file_data, 0x3D, 0x1, true).match(/../g).reverse().join(''), 16)
+            reading.reverse_endian(reading.readHex(file_data, 0x3B, 0x1, true)) ,
+            reading.reverse_endian(reading.readHex(file_data, 0x3C, 0x1, true)) ,
+            reading.reverse_endian(reading.readHex(file_data, 0x3D, 0x1, true)) 
         ],
     };
 
     var timestamp_opened = {
-        "year": parseInt(reading.readHex(file_data, 0x44, 0x2, true).match(/../g).reverse().join(''), 16), // Big endian to little endian
+        "year": reading.reverse_endian(reading.readHex(file_data, 0x44, 0x2, true)), // Big endian to little endian
         "date": [
-            parseInt(reading.readHex(file_data, 0x48, 0x1, true).match(/../g).reverse().join(''), 16),
-            parseInt(reading.readHex(file_data, 0x49, 0x1, true).match(/../g).reverse().join(''), 16)
+            reading.reverse_endian(reading.readHex(file_data, 0x48, 0x1, true)),
+            reading.reverse_endian(reading.readHex(file_data, 0x49, 0x1, true))
         ],
         "time": [
-            parseInt(reading.readHex(file_data, 0x4B, 0x1, true).match(/../g).reverse().join(''), 16),
-            parseInt(reading.readHex(file_data, 0x4C, 0x1, true).match(/../g).reverse().join(''), 16),
-            parseInt(reading.readHex(file_data, 0x4D, 0x1, true).match(/../g).reverse().join(''), 16)
+            reading.reverse_endian(reading.readHex(file_data, 0x4B, 0x1, true)),
+            reading.reverse_endian(reading.readHex(file_data, 0x4C, 0x1, true)),
+            reading.reverse_endian(reading.readHex(file_data, 0x4D, 0x1, true))
         ],
     };
 
     var file_data = reading.load_file(`./CEC/${id}/InboxInfo`);
 
     var inbox_infos = {
-        "max_box_data": parseInt(reading.readHex(file_data, 0x8, 0x4, true).match(/../g).reverse().join(''), 16), //Allways the same
-        "box_data": parseInt(reading.readHex(file_data, 0xC, 0x4, true).match(/../g).reverse().join(''), 16),
-        "max_mess": parseInt(reading.readHex(file_data, 0x10, 0x4, true).match(/../g).reverse().join(''), 16),
-        "curr_mess": parseInt(reading.readHex(file_data, 0x14, 0x4, true).match(/../g).reverse().join(''), 16),
-        "max_mess_size": parseInt(reading.readHex(file_data, 0x1C, 0x4, true).match(/../g).reverse().join(''), 16)
+        "max_box_data": reading.reverse_endian(reading.readHex(file_data, 0x8, 0x4, true)), //Allways the same
+        "box_data": reading.reverse_endian(reading.readHex(file_data, 0xC, 0x4, true)),
+        "max_mess": reading.reverse_endian(reading.readHex(file_data, 0x10, 0x4, true)),
+        "curr_mess": reading.reverse_endian(reading.readHex(file_data, 0x14, 0x4, true)),
+        "max_mess_size": reading.reverse_endian(reading.readHex(file_data, 0x1C, 0x4, true))
     }
 
     var file_data = reading.load_file(`./CEC/${id}/OutboxInfo`);
 
     var outbox_infos = {
-        "max_box_data": parseInt(reading.readHex(file_data, 0x8, 0x4, true).match(/../g).reverse().join(''), 16), //Allways the same
-        "box_data": parseInt(reading.readHex(file_data, 0xC, 0x4, true).match(/../g).reverse().join(''), 16),
-        "max_mess": parseInt(reading.readHex(file_data, 0x10, 0x4, true).match(/../g).reverse().join(''), 16),
-        "curr_mess": parseInt(reading.readHex(file_data, 0x14, 0x4, true).match(/../g).reverse().join(''), 16),
-        "max_mess_size": parseInt(reading.readHex(file_data, 0x1C, 0x4, true).match(/../g).reverse().join(''), 16)
+        "max_box_data": reading.reverse_endian(reading.readHex(file_data, 0x8, 0x4, true)), //Allways the same
+        "box_data": reading.reverse_endian(reading.readHex(file_data, 0xC, 0x4, true)),
+        "max_mess": reading.reverse_endian(reading.readHex(file_data, 0x10, 0x4, true)),
+        "curr_mess": reading.reverse_endian(reading.readHex(file_data, 0x14, 0x4, true)),
+        "max_mess_size": reading.reverse_endian(reading.readHex(file_data, 0x1C, 0x4, true))
     }
 
     return [title_id, timestamp_acessed, timestamp_opened, inbox_infos, outbox_infos]
 }
 
+///////////////////////////////////////////////////////////////////Set the box info
 function set_app_info(id) {
     var data = get_app_info(id);
     var date_accessed = new Date(
@@ -123,12 +126,14 @@ function set_app_info(id) {
 
 }
 
+///////////////////////////////////////////////////////////////////Set the dropdonw texts
 function set_inoutdropbox_info(id){
+    
     var Inboxes = reading.listFiles(path.normalize(`./CEC/${id}/Inbox/`));
     var inID;
 
-    Inboxes.forEach(inbox => {
-        inID = reading.readHex(path.normalize(`./CEC/${id}/Inbox/${inbox}`), 0x20, 0x8, false);
+    Inboxes.forEach(inbox => { //creating the element for each message
+        inID = inbox;
 
         var ina = document.createElement("a");
 
@@ -141,13 +146,15 @@ function set_inoutdropbox_info(id){
 
         dropdown_in.appendChild(ina);
     });
-    set_input_info(id, inID)
+
+    set_input_info(id, inID) //Set the input infos for the first time (last mess)
+
 
     var Outboxes = reading.listFiles(path.normalize(`./CEC/${id}/Outbox/`));
     var outID;
 
     Outboxes.forEach(outbox => {
-        outID = reading.readHex(path.normalize(`./CEC/${id}/Outbox/${outbox}`), 0x20, 0x8, false);
+        outID = outbox;
 
         var outa = document.createElement("a");
 
@@ -155,24 +162,68 @@ function set_inoutdropbox_info(id){
         outa.appendChild(text);
 
         outa.id = outID;
-        outa.href = "#Main_Inbox";
+        outa.href = "#Main_Outbox";
         outa.setAttribute("onclick", `reload_Common_Event("${outID}", false);`);
         
         dropdown_out.appendChild(outa);
     });
-    set_output_info(id, outID);
+
+    set_output_info(id, outID); //Same as before
     
 }
 
+///////////////////////////////////////////////////////////////////Get the information about the message
 function get_mess_info(game_id, id, IorO){
+    if(IorO){
+        var path = `./CEC/${game_id}/Inbox/${id}`;
+    }else{
+        var path = `./CEC/${game_id}/Outbox/${id}`;
+    }
+    var file_data = reading.load_file(path);
 
+    var mess_id = reading.reverse_endian(reading.readHex(file_data, 0x20, 0x8, true));
+    var mess_size = reading.reverse_endian(reading.readHex(file_data, 0x4, 0x4, true));
+    var send_method = reading.readHex(file_data, 0x35, 0x1, true);
+    var unopen = reading.readHex(file_data, 0x36, 0x1, true);
+    var isnew = reading.readHex(file_data, 0x37, 0x1, true);
+
+
+    var timestamp_sent = {
+        "year": reading.reverse_endian(reading.readHex(file_data, 0x48, 0x2, true)), 
+        "date": [
+            reading.reverse_endian(reading.readHex(file_data, 0x4C, 0x1, true)) , 
+            reading.reverse_endian(reading.readHex(file_data, 0x4D, 0x1, true)) 
+        ],
+        "time": [
+            reading.reverse_endian(reading.readHex(file_data, 0x4F, 0x1, true)) ,
+            reading.reverse_endian(reading.readHex(file_data, 0x50, 0x1, true)) ,
+            reading.reverse_endian(reading.readHex(file_data, 0x51, 0x1, true)) 
+        ],
+    };
+
+    var timestamp_created = {
+        "year": reading.reverse_endian(reading.readHex(file_data, 0x60, 0x2, true)),
+        "date": [
+            reading.reverse_endian(reading.readHex(file_data, 0x64, 0x1, true)),
+            reading.reverse_endian(reading.readHex(file_data, 0x65, 0x1, true))
+        ],
+        "time": [
+            reading.reverse_endian(reading.readHex(file_data, 0x66, 0x1, true)),
+            reading.reverse_endian(reading.readHex(file_data, 0x67, 0x1, true)),
+            reading.reverse_endian(reading.readHex(file_data, 0x68, 0x1, true))
+        ],
+    };
+    
+    return [mess_id, mess_size, send_method, unopen, isnew, timestamp_sent, timestamp_created];
 }
 
+///////////////////////////////////////////////////////////////////Set the info for the input square
 function set_input_info(game_id, id){
     var data = get_mess_info(game_id, id, true);
 
 }
 
+///////////////////////////////////////////////////////////////////Set the info about the output square
 function set_output_info(game_id, id){
     var data = get_mess_info(game_id, id, false);
 
