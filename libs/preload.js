@@ -30,5 +30,6 @@ function add_gamesToList() { //read the function name
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+    window.CECPATH = "./CEC"
     add_gamesToList();
 });

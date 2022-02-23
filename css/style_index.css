@@ -24,6 +24,10 @@ h6 {
     background-color: dimgray;
 }
 
+input[type="file"] {
+    display: none !important;
+}
+
 .myFooter {
     position: absolute;
     top: 93%;

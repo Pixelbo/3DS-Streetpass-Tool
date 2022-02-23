@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 ///////////////////////////////////////////////////////////////////Get the box infos (last time opened a game opened it, ...)
 function get_app_info(id) {
-    var file_data = reading.load_file(`./CEC/${id}/MessBoxInfo`);
+    var file_data = reading.load_file(`${window.CECPATH}/${id}/MessBoxInfo`);
 
     var title_id = reading.readHex(file_data, 0x4, 0x4, true).match(/../g).reverse().join('');
 
@@ -55,7 +55,7 @@ function get_app_info(id) {
         ],
     };
 
-    var timestamp_opened = {
+    var timestamp_received = {
         "year": reading.reverse_endian(reading.readHex(file_data, 0x44, 0x2, true)), // Big endian to little endian
         "date": [
             reading.reverse_endian(reading.readHex(file_data, 0x48, 0x1, true)),
@@ -68,7 +68,7 @@ function get_app_info(id) {
         ],
     };
 
-    var file_data = reading.load_file(`./CEC/${id}/InboxInfo`);
+    var file_data = reading.load_file(`${window.CECPATH}/${id}/InboxInfo`);
 
     var inbox_infos = {
         "max_box_data": reading.reverse_endian(reading.readHex(file_data, 0x8, 0x4, true)), //Allways the same
@@ -79,7 +79,7 @@ function get_app_info(id) {
     }
     window.max_inmess_size = inbox_infos["max_mess_size"]
 
-    var file_data = reading.load_file(`./CEC/${id}/OutboxInfo`);
+    var file_data = reading.load_file(`${window.CECPATH}/${id}/OutboxInfo`);
 
     var outbox_infos = {
         "max_box_data": reading.reverse_endian(reading.readHex(file_data, 0x8, 0x4, true)), //Allways the same
@@ -89,33 +89,27 @@ function get_app_info(id) {
         "max_mess_size": reading.reverse_endian(reading.readHex(file_data, 0x1C, 0x4, true))
     }
 
-    return [title_id, timestamp_acessed, timestamp_opened, inbox_infos, outbox_infos]
+    return [title_id, timestamp_acessed, timestamp_received, inbox_infos, outbox_infos]
 }
 
 ///////////////////////////////////////////////////////////////////Set the box info
 function set_app_info(id) {
     var data = get_app_info(id);
-    var date_accessed = new Date(
-        data[1]["year"],
-        data[1]["date"][0] - 1, //Cause date module begin at 0
-        data[1]["date"][1],
-        data[1]["time"][0],
-        data[1]["time"][1],
-        data[1]["time"][2]
-    );
-    var date_opened = new Date(
-        data[2]["year"],
-        data[2]["date"][0] - 1, //Cause date module begin at 0
-        data[2]["date"][1],
-        data[2]["time"][0],
-        data[2]["time"][1],
-        data[2]["time"][2]
-    );
+    
+    var date_accessed = data[1]["year"].toString() +"-"+ ("0" + (data[1]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[1]["date"][1]).toString()).slice(-2);
+    var time_accessed = ("0" + data[1]["time"][0].toString()).slice(-2) + ":" + ("0" + data[1]["time"][1].toString()).slice(-2) + ":" + ("0" + data[1]["time"][2].toString()).slice(-2);
 
-    iframeDOC.document.getElementById("titleID").innerText = data[0];
+    var date_received = data[2]["year"].toString() +"-"+ ("0" + (data[2]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[2]["date"][1]).toString()).slice(-2);
+    var time_received = ("0" + data[2]["time"][0].toString()).slice(-2) + ":" + ("0" + data[2]["time"][1].toString()).slice(-2) + ":" + ("0" + data[2]["time"][2].toString()).slice(-2);
 
-    iframeDOC.document.getElementById("date_accessed").innerText = "Date accessed: " + date_accessed.toDateString();
-    iframeDOC.document.getElementById("date_opened").innerText = "Date opened: " + date_opened.toDateString();
+
+    iframeDOC.document.getElementById("titleID").innerText = " " + data[0];
+
+    iframeDOC.document.getElementById("date_accessed").setAttribute("value", date_accessed);
+    iframeDOC.document.getElementById("time_accessed").setAttribute("value", time_accessed);
+
+    iframeDOC.document.getElementById("date_received").setAttribute("value", date_received);
+    iframeDOC.document.getElementById("time_received").setAttribute("value", time_received);
 
     iframeDOC.document.getElementById("inbox").innerText =
         `Inbox: -Box Size: ${data[3]["box_data"]}, MaxBoxSize: ${data[3]["max_box_data"]}-Num of Messages: ${data[3]["curr_mess"]}, MaxMessages: ${data[3]["max_mess"]}, MaxMessSize: ${data[3]["max_mess_size"]}`;
@@ -128,7 +122,7 @@ function set_app_info(id) {
 ///////////////////////////////////////////////////////////////////Set the dropdonw texts
 function set_inoutdropbox_info(id){
     
-    var Inboxes = reading.listFiles(path.normalize(`./CEC/${id}/Inbox/`));
+    var Inboxes = reading.listFiles(path.normalize(`${window.CECPATH}/${id}/Inbox/`));
     var inID;
 
     Inboxes.forEach(inbox => { //creating the element for each message
@@ -149,7 +143,7 @@ function set_inoutdropbox_info(id){
     set_input_info(id, inID) //Set the input infos for the first time (last mess)
 
 
-    var Outboxes = reading.listFiles(path.normalize(`./CEC/${id}/Outbox/`));
+    var Outboxes = reading.listFiles(path.normalize(`${window.CECPATH}/${id}/Outbox/`));
     var outID;
 
     Outboxes.forEach(outbox => {
@@ -174,9 +168,9 @@ function set_inoutdropbox_info(id){
 ///////////////////////////////////////////////////////////////////Get the information about the message
 function get_mess_info(game_id, id, IorO){
     if(IorO){
-        var path = `./CEC/${game_id}/Inbox/${id}`;
+        var path = `${window.CECPATH}/${game_id}/Inbox/${id}`;
     }else{
-        var path = `./CEC/${game_id}/Outbox/${id}`;
+        var path = `${window.CECPATH}/${game_id}/Outbox/${id}`;
     }
     var file_data = reading.load_file(path);
 
@@ -237,7 +231,7 @@ function set_input_info(game_id, id){
         data[6]["time"][2]
     );
 
-    iframeDOC.document.getElementById("in_messID").innerText = "Mess ID" + data[0].toString(16).toUpperCase();
+    iframeDOC.document.getElementById("in_messID").innerText =  " " + data[0].toString(16).toUpperCase();
     iframeDOC.document.getElementById("in_messSize").innerText = "MessSize" + data[1];
     iframeDOC.document.getElementById("in_messMethtod").innerText = "MessMethod" + data[2];
     iframeDOC.document.getElementById("in_messUnopen").innerText = "Mess Unopen" + data[3];
@@ -269,7 +263,7 @@ function set_output_info(game_id, id){
         data[6]["time"][2]
     );
 
-    iframeDOC.document.getElementById("out_messID").innerText = "Mess ID" + data[0].toString(16).toUpperCase();
+    iframeDOC.document.getElementById("out_messID").innerText = " " + data[0].toString(16).toUpperCase();
     iframeDOC.document.getElementById("out_messSize").innerText = "MessSize" + data[1];
     iframeDOC.document.getElementById("out_messMethtod").innerText = "MessMethod" + data[2];
     iframeDOC.document.getElementById("out_messUnopen").innerText = "Mess Unopen" + data[3];

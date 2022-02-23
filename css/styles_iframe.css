@@ -1,6 +1,15 @@
 html, body {
     background-color: rgb(85, 85, 85);
     margin: 0px;
+
+    font-family: "Roboto",sans-serif;
+}
+
+h1, h2{
+    margin: 0;
+    margin-bottom: 2%;
+    padding: 1%;
+    background-color: rgb(141, 141, 141);;
 }
 
 .Main_Common{

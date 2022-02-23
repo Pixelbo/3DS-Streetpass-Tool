@@ -46,6 +46,17 @@ function load_about() { //Seperate function cause of the active color
   clear_active();
 }
 
+document.getElementById("CEC_folder").addEventListener("change", function(event) { //When CEC folder is changed
+  let files = event.target.files;
+  var folderpath = files[0]["path"].split("\\").slice(0,-1).join("\\");
+
+  window.CECPATH = folderpath;
+
+  load_common(window.titleID)
+}, false);
+
+
+
 function iframe_reload_event() {
   const reloadIframeEvent = new CustomEvent("reloadIframeEvent", {
     detail: window.titleID

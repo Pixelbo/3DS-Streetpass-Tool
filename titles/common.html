@@ -33,17 +33,30 @@
     </div>
     
     <div id="Main_Common" class="Main_Common">
-        <p>COMMON</p>
-        <p id="titleID"></p>
-        <p id="date_accessed"></p>
-        <p id="date_opened"></p>
+        <h1>Common Information for the title: <ins id="titleID"></ins></h2>
+        
+        <div style="display:flex; justify-content: left; align-items: center">
+            <p style="margin: 3px;"> Message last accesed the </p>
+            <input type="date" id="date_accessed" name="date_accessed" value="" min="2000-01-01" max="2100-12-31">
+            <p style="margin: 3px;"> at </p>
+            <input type="time" id="time_accessed" name="time_accessed" value="" step="1">
+        </div>
+
+        <div style="display:flex; justify-content: left; align-items: center">
+            <p style="margin: 3px;"> Message last received the </p>
+            <input type="date" id="date_received" name="date_received" value="" min="2000-01-01" max="2100-12-31">
+            <p style="margin: 3px;"> at </p>
+            <input type="time" id="time_received" name="time_received" value="" step="1">
+        </div>
+
+    
         <p id="inbox"></p>
         <p id="outbox"></p>
     </div>
 
     <div id="Main_Inbox" class="Main_Inbox">
-        <p>Inbox</p>
-        <p id="in_messID"></p>
+        <h2 >Inbox Information, ID: <ins id="in_messID"></ins> </h2>
+
         <p id="in_messSize"></p>
         <p id="in_messMethtod"></p>
         <p id="in_messUnopen"></p>
@@ -53,7 +66,8 @@
     </div>
 
     <div id="Main_Outbox" class="Main_Outbox">
-        <p>Outbox</p>
+        <h2 >Outbox Information, ID: <ins id="out_messID"></ins> </h2>
+
         <p id="out_messID"></p>
         <p id="out_messSize"></p>
         <p id="out_messMethtod"></p>
