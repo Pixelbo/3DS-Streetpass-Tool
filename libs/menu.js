@@ -13,7 +13,7 @@ function clear_active() { //Clear colors on te game selector
     var nodes = document.getElementById('titleSelector').childNodes;
     for (var i = 0; i < nodes.length; i++) {
         if (nodes[i].nodeName.toLowerCase() == 'a') {
-            nodes[i].className = "";
+            nodes[i].classList.remove("active_btn");
         }
     }
 }
@@ -30,9 +30,9 @@ function load_common(title_id){ //Load the page that is common for every game
     iframe.src = "./titles/common.html";
     FullOrCommon(false); //show topnav²
 
-    btn_list.className = ""; //Colors for the menu
-    btn_about.className = "";
-    document.getElementById(title_id).className = "active";
+    btn_list.classList.remove("active_btn");
+    btn_about.classList.remove("active_btn");
+    document.getElementById(title_id).classList.add("active_btn") ;
 
     window.titleID = title_id; //Global var for the title ID
 
@@ -40,16 +40,16 @@ function load_common(title_id){ //Load the page that is common for every game
 
 function load_list() { //Seperate function cause of the active color
     iframe.src = "./list.html";
-    btn_list.className = "active";
-    btn_about.className = "";
+    btn_list.classList.add("active_btn");
+    btn_about.classList.remove("active_btn");
     FullOrCommon(true);
     clear_active();
 }
 
 function load_about() { //Seperate function cause of the active color
     iframe.src = "./about.html";
-    btn_list.className = "";
-    btn_about.className = "active";
+    btn_list.classList.remove("active_btn");
+    btn_about.classList.add("active_btn");
     FullOrCommon(true);
     clear_active();
 }

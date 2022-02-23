@@ -77,6 +77,7 @@ function get_app_info(id) {
         "curr_mess": reading.reverse_endian(reading.readHex(file_data, 0x14, 0x4, true)),
         "max_mess_size": reading.reverse_endian(reading.readHex(file_data, 0x1C, 0x4, true))
     }
+    window.max_inmess_size = inbox_infos["max_mess_size"]
 
     var file_data = reading.load_file(`./CEC/${id}/OutboxInfo`);
 
@@ -111,17 +112,15 @@ function set_app_info(id) {
         data[2]["time"][2]
     );
 
-    var iframe = document.getElementById("main").contentWindow;
+    iframeDOC.document.getElementById("titleID").innerText = data[0];
 
-    iframe.document.getElementById("titleID").innerText = data[0];
+    iframeDOC.document.getElementById("date_accessed").innerText = "Date accessed: " + date_accessed.toDateString();
+    iframeDOC.document.getElementById("date_opened").innerText = "Date opened: " + date_opened.toDateString();
 
-    iframe.document.getElementById("date_accessed").innerText = "Date accessed: " + date_accessed.toDateString();
-    iframe.document.getElementById("date_opened").innerText = "Date opened: " + date_opened.toDateString();
-
-    iframe.document.getElementById("inbox").innerText =
+    iframeDOC.document.getElementById("inbox").innerText =
         `Inbox: -Box Size: ${data[3]["box_data"]}, MaxBoxSize: ${data[3]["max_box_data"]}-Num of Messages: ${data[3]["curr_mess"]}, MaxMessages: ${data[3]["max_mess"]}, MaxMessSize: ${data[3]["max_mess_size"]}`;
 
-    iframe.document.getElementById("outbox").innerText =
+    iframeDOC.document.getElementById("outbox").innerText =
         `Outbox: -Box Size: ${data[4]["box_data"]}, MaxBoxSize: ${data[4]["max_box_data"]}-Num of Messages: ${data[4]["curr_mess"]}, MaxMessages: ${data[4]["max_mess"]}, MaxMessSize: ${data[4]["max_mess_size"]}`;
 
 }
@@ -221,10 +220,61 @@ function get_mess_info(game_id, id, IorO){
 function set_input_info(game_id, id){
     var data = get_mess_info(game_id, id, true);
 
+    var date_sent = new Date(
+        data[5]["year"],
+        data[5]["date"][0] - 1, //Cause date module begin at 0
+        data[5]["date"][1],
+        data[5]["time"][0],
+        data[5]["time"][1],
+        data[5]["time"][2]
+    );
+    var date_created = new Date(
+        data[6]["year"],
+        data[6]["date"][0] - 1, //Cause date module begin at 0
+        data[6]["date"][1],
+        data[6]["time"][0],
+        data[6]["time"][1],
+        data[6]["time"][2]
+    );
+
+    iframeDOC.document.getElementById("in_messID").innerText = "Mess ID" + data[0].toString(16).toUpperCase();
+    iframeDOC.document.getElementById("in_messSize").innerText = "MessSize" + data[1];
+    iframeDOC.document.getElementById("in_messMethtod").innerText = "MessMethod" + data[2];
+    iframeDOC.document.getElementById("in_messUnopen").innerText = "Mess Unopen" + data[3];
+    iframeDOC.document.getElementById("in_messIsnew").innerText = "Mess New" + data[4];
+
+    iframeDOC.document.getElementById("in_messSent").innerText = "Date accessed: " + date_sent.toDateString();
+    iframeDOC.document.getElementById("in_messCreated").innerText = "Date opened: " + date_created.toDateString();
+
 }
 
 ///////////////////////////////////////////////////////////////////Set the info about the output square
 function set_output_info(game_id, id){
     var data = get_mess_info(game_id, id, false);
+    
+    var date_sent = new Date(
+        data[5]["year"],
+        data[5]["date"][0] - 1, //Cause date module begin at 0
+        data[5]["date"][1],
+        data[5]["time"][0],
+        data[5]["time"][1],
+        data[5]["time"][2]
+    );
+    var date_created = new Date(
+        data[6]["year"],
+        data[6]["date"][0] - 1, //Cause date module begin at 0
+        data[6]["date"][1],
+        data[6]["time"][0],
+        data[6]["time"][1],
+        data[6]["time"][2]
+    );
 
+    iframeDOC.document.getElementById("out_messID").innerText = "Mess ID" + data[0].toString(16).toUpperCase();
+    iframeDOC.document.getElementById("out_messSize").innerText = "MessSize" + data[1];
+    iframeDOC.document.getElementById("out_messMethtod").innerText = "MessMethod" + data[2];
+    iframeDOC.document.getElementById("out_messUnopen").innerText = "Mess Unopen" + data[3];
+    iframeDOC.document.getElementById("out_messIsnew").innerText = "Mess New" + data[4];
+
+    iframeDOC.document.getElementById("out_messSent").innerText = "Date accessed: " + date_sent.toDateString();
+    iframeDOC.document.getElementById("out_messCreated").innerText = "Date opened: " + date_created.toDateString();
 }

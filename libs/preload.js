@@ -17,6 +17,7 @@ function add_gamesToList() { //read the function name
         var child = document.createElement("a");
         var text = document.createTextNode(titleName);
 
+        child.setAttribute("class", 'w3-bar-item w3-button w3-hover-black');
         child.setAttribute("onclick", `load_common("${title}");`);
         child.id = title
         child.href = "#"

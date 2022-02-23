@@ -1,36 +1,60 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
+    <head>
+        <title>Streetpass  tool in electron</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./css/archive/w3.css">
+        <link rel="stylesheet" href="./css/archive/w3-theme-black.css">
+        <link rel="stylesheet" href="./css/archive/css-font.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="./css/style_index.css">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./libs/menu.js"></script>
+    </head>
+    <body>
 
-    <title>CEC Tool in electron</title>
-    <meta name="description" content="CEC">
-    <meta name="author" content="Pixelbo">
+        <!-- Navbar -->
+        <div class="w3-top">
+            <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+                <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+                <a id="about" href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white active" onclick="load_about()">About</a>
+                <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Import</a>
+                <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Save</a>
+                <a id="list" href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white" onclick="load_list()">Supported Game</a>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
+            <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+                <i class="fa fa-remove"></i>
+            </a>
+            <div id="titleSelector">
+                <h4 class="w3-bar-item"><b>Menu</b></h4>
+                <!-- <a class="w3-bar-item w3-button w3-hover-black" href="#">Link</a> "Template"-->
+            </div>
+        </nav>
 
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/styles_topnav.css">
-    <link rel="stylesheet" href="css/sytles_sidenav.css">
+        <!-- Overlay effect when opening sidebar on small screens -->
+        <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
-    <script src="./libs/menu.js"></script>
-</head>
+        <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+        <div class="w3-main" style="margin-left:250px">
 
-<body>
-    <div> <!-- main navigation-->
-        <div class="topnav" id="topSelector"> <!-- "main" menu-->
-            <button id="import" type="button" href="">Import</button> <!-- idk-->
-            <button id="save" type="button" href="">Save</button> <!-- save changes = get values from option and write-->
-            <button id="list" type="button" href="" class="" onclick="load_list();">List of supported games</button>
-            <button id="about" type="button" href="" class="active" onclick="load_about();">About</button>
+        <div>
+            <iframe class="main" id="main" src="about.html" onLoad="iframe_reload_event();" title="Main"></iframe> <!-- varies from games/situation, you can do without iframe but I'm noob !-->
         </div>
 
-        <div class="sidenav" id="titleSelector"></div><!-- title selector goes here-->
-    </div>
+        <footer id="myFooter">
+            <div class="w3-container w3-theme-l2 w3-padding-32">
+            <h4>Footer</h4>
+            </div>
+        </footer>
 
-    <iframe class="main" id="main" src="about.html" onLoad="iframe_reload_event();" title="Main"></iframe> <!-- varies from games/situation, you can do without iframe but I'm noob !-->
+        <!-- END MAIN -->
+        </div>
 
-</body>
-
+        <script src="./libs/index.js"></script>
+    </body>
 </html>
