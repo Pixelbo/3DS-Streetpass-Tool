@@ -5,24 +5,42 @@ html, body {
 
 .Main_Common{
     position: absolute;
-    background-color:rgb(85, 85, 85);
+
     top: 6%;
     width: 100%;
     height: 90%;
+
+    background-color:rgb(85, 85, 85);
+    box-sizing: border-box;
+    border:solid;
+    border-radius: 2px;
+    border-color:blue;
 }
 
 .Main_Inbox{
     position: absolute;
-    background-color: rgb(97, 97, 97);
+
     top:96%;
     width: 100%;
     height: 90%;
+
+    background-color:rgb(85, 85, 85);
+    box-sizing: border-box;
+    border-style: groove;
+    border-radius: 2px;
+    border-color:lightgreen;
 }
 
 .Main_Outbox{
     position: absolute;
-    background-color: rgb(119, 119, 119);
+
     top:186%;
     width: 100%;
     height: 90%;
+
+    background-color:rgb(85, 85, 85);
+    box-sizing: border-box;
+    border-style: groove;
+    border-radius: 2px;
+    border-color: red;
 }

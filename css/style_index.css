@@ -1,9 +1,17 @@
-html,body,h1,h2,h3,h4,h5,h6 {
-    font-family: "Roboto", 
-    sans-serif;
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Roboto",sans-serif;
+    overflow: hidden;
+
 }
 
-.main,.main_{
+.main {
     position: fixed;
     padding-top: 43px;
 
@@ -12,14 +20,14 @@ html,body,h1,h2,h3,h4,h5,h6 {
     height: 93%;
 }
 
-.active_btn{
-    background-color: aquamarine;
+.active_btn {
+    background-color: dimgray;
 }
 
-.myFooter{
+.myFooter {
     position: absolute;
-    top:93%;
-    height: 7%;
+    top: 93%;
+    height: 10%;
     width: 100%;
 }
 
@@ -29,5 +37,5 @@ html,body,h1,h2,h3,h4,h5,h6 {
     top: 43px;
     bottom: 0;
     height: inherit;
+    background-color:grey !important;
 }
-
