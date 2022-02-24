@@ -115,7 +115,7 @@ function set_app_info(id) {
     iframeDOC.document.getElementById("date_received").setAttribute("value", date_received);
     iframeDOC.document.getElementById("time_received").setAttribute("value", time_received);
 
-    var cpuGauge = Gauge(iframeDOC.document.getElementById("GaugeMessNumI"),{
+    var GaugeMessNumI = Gauge(iframeDOC.document.getElementById("GaugeMessNumI"),{
         max: data[3]["max_mess"],
         dialStartAngle: 180,
         dialEndAngle: 0,
@@ -125,9 +125,9 @@ function set_app_info(id) {
         label: function(value) {return (Math.round(value) + "/" + this.max);},
     });
 
-    cpuGauge.setValueAnimated(data[3]["curr_mess"], 1);
+    GaugeMessNumI.setValueAnimated(data[3]["curr_mess"], 1);
 
-    var cpuGauge = Gauge(iframeDOC.document.getElementById("GaugeBoxSizeI"),{
+    var GaugeBoxSizeI = Gauge(iframeDOC.document.getElementById("GaugeBoxSizeI"),{
         max: Math.round(data[3]["max_box_data"]/100),
         dialStartAngle: 0,
         dialEndAngle: -180,
@@ -136,7 +136,30 @@ function set_app_info(id) {
         label: function(value) {return (Math.round(value) + "/" + this.max);},
     });
 
-    cpuGauge.setValueAnimated(Math.round(data[3]["box_data"]/100), 1);
+    GaugeBoxSizeI.setValueAnimated(Math.round(data[3]["box_data"]/100), 1);
+
+    var GaugeMessNumO = Gauge(iframeDOC.document.getElementById("GaugeMessNumO"),{
+        max: data[4]["max_mess"],
+        dialStartAngle: 180,
+        dialEndAngle: 0,
+        value: 0,
+        iewBox: "0 0 100 100",
+        value: 0,
+        label: function(value) {return (Math.round(value) + "/" + this.max);},
+    });
+
+    GaugeMessNumO.setValueAnimated(data[4]["curr_mess"], 1);
+
+    var GaugeBoxSizeO = Gauge(iframeDOC.document.getElementById("GaugeBoxSizeO"),{
+        max: Math.round(data[4]["max_box_data"]/100),
+        dialStartAngle: 0,
+        dialEndAngle: -180,
+        viewBox: "0 40 100 100",
+        value: 0,
+        label: function(value) {return (Math.round(value) + "/" + this.max);},
+    });
+
+    GaugeBoxSizeO.setValueAnimated(Math.round(data[4]["box_data"]/100), 1);
 
     /* iframeDOC.document.getElementById("inbox").innerText =
         `Inbox: -Box Size: ${data[3]["box_data"]}, MaxBoxSize: ${data[3]["max_box_data"]}-Num of Messages: ${, MaxMessages: ${}, MaxMessSize: ${data[3]["max_mess_size"]}`;

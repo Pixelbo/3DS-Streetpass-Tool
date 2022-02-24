@@ -29,9 +29,9 @@ input[type="file"] {
 }
 
 .myFooter {
-    position: absolute;
-    top: 93%;
-    height: 10%;
+    position: fixed;
+    bottom: 0;
+    height: 7%;
     width: 100%;
 }
 
