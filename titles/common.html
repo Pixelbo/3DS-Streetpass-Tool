@@ -15,62 +15,68 @@
 <body>
 
     <div id="titleNavbar" class="title-navbar">
-        <a href="#box" style="background-color: rgb(100, 0, 0);">Box Information</a><!-- common infos: common.html#box-->
-        <a href="#game" onclick="load_game(window.parent.window.titleID)">Game tool</a> <!-- Sets iframe to {title}.html-->
+        <a href="#box" style="background-color: rgb(100, 0, 0);">Box Information</a>
+        <!-- common infos: common.html#box-->
+        <a href="#game" onclick="load_game(window.parent.window.titleID)">Game tool</a>
+        <!-- Sets iframe to {title}.html-->
 
-        <div class="dropdown"> <!--common infos : common.html#inputID-->
+        <div class="dropdown">
+            <!--common infos : common.html#inputID-->
             <button class="dropbtn dropbtnI" onclick="toggle_dropdown('dropdown_input')">Input Messages</button>
             <div class="dropdown-content" id="dropdown_input">
                 <!-- btns goes gere-->
             </div>
-        </div> 
-        
-        <div class="dropdown"><!-- common infos#outputID-->
+        </div>
+
+        <div class="dropdown">
+            <!-- common infos#outputID-->
             <button class="dropbtn dropbtnO" onclick="toggle_dropdown('dropdown_output')">Output Messages</button>
             <div class="dropdown-content" id="dropdown_output">
                 <!-- btns goes gere-->
             </div>
-        </div> 
+        </div>
     </div>
-    
+
     <div id="Main_Common" class="Main_Common">
         <h1>Common Information for the title: <ins id="titleID"></ins></h2>
-        
-        <div style="display:flex; justify-content: left; align-items: center">
-            <p style="margin: 3px;"> Message last accesed the </p>
-            <input type="date" id="date_accessed" name="date_accessed" value="" min="2000-01-01" max="2100-12-31">
-            <p style="margin: 3px;"> at </p>
-            <input type="time" id="time_accessed" name="time_accessed" value="" step="1">
-        </div>
 
-        <div style="display:flex; justify-content: left; align-items: center">
-            <p style="margin: 3px;"> Message last received the </p>
-            <input type="date" id="date_received" name="date_received" value="" min="2000-01-01" max="2100-12-31">
-            <p style="margin: 3px;"> at </p>
-            <input type="time" id="time_received" name="time_received" value="" step="1">
-        </div>
+            <div style="display:flex; justify-content: left; align-items: center">
+                <p style="margin: 3px;"> Message last accesed the </p>
+                <input type="date" id="date_accessed" name="date_accessed" value="" min="2000-01-01" max="2100-12-31">
+                <p style="margin: 3px;"> at </p>
+                <input type="time" id="time_accessed" name="time_accessed" value="" step="1">
+            </div>
 
-        <table style="width:100%">
-            <tr>
-              <th>Company</th>
-              <th>Contact</th>
-            </tr>
-            <tr>
-              <td>
-                <p id="inbox"></p>
-                
-              </td>
-              <td>
-                <p id="outbox"></p>
-              </td>
-            </tr>
-          </table>
+            <div style="display:flex; justify-content: left; align-items: center">
+                <p style="margin: 3px;"> Message last received the </p>
+                <input type="date" id="date_received" name="date_received" value="" min="2000-01-01" max="2100-12-31">
+                <p style="margin: 3px;"> at </p>
+                <input type="time" id="time_received" name="time_received" value="" step="1">
+            </div>
+
+            <div class="row">
+                <div class="column">
+                    <p id="inbox"></p>
+                    <h3>Inbox</h3>
+                    <div id="GaugeMessNumI" class="gauge-container">
+                        <h3 class="GaugeTextAlign" style="top: 60%;">Message count</h3>
+                    </div>
+
+                    <div id="GaugeBoxSizeI" class="gauge-container">
+                        <h3 class="GaugeTextAlign" style="bottom:105%">Box size</h3>
+                    </div>
+                </div>
+                <div class="column">
+                    <h3>Outbox</h3>
+                    <p id="outbox"></p>
+                </div>
+            </div>
 
 
     </div>
 
     <div id="Main_Inbox" class="Main_Inbox">
-        <h2 >Inbox Information, ID: <ins id="in_messID"></ins> </h2>
+        <h2>Inbox Information, ID: <ins id="in_messID"></ins> </h2>
 
         <p id="in_messSize"></p>
         <p id="in_messMethtod"></p>
@@ -81,7 +87,7 @@
     </div>
 
     <div id="Main_Outbox" class="Main_Outbox">
-        <h2 >Outbox Information, ID: <ins id="out_messID"></ins> </h2>
+        <h2>Outbox Information, ID: <ins id="out_messID"></ins> </h2>
 
         <p id="out_messID"></p>
         <p id="out_messSize"></p>

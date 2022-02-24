@@ -3,6 +3,7 @@
 
 var reading = require("./reading")
 var path = require("path");
+var Gauge = require("svg-gauge");
 
 var iframeDOC, dropdown_in, dropdown_out;
 
@@ -21,6 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             set_app_info(window.titleID); //Set the common infos
             set_inoutdropbox_info(window.titleID); //Set the messages in the dropdown
+
         }
     });
 
@@ -34,6 +36,8 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
     });
+
+    
 });
 
 ///////////////////////////////////////////////////////////////////Get the box infos (last time opened a game opened it, ...)
@@ -111,12 +115,35 @@ function set_app_info(id) {
     iframeDOC.document.getElementById("date_received").setAttribute("value", date_received);
     iframeDOC.document.getElementById("time_received").setAttribute("value", time_received);
 
-    iframeDOC.document.getElementById("inbox").innerText =
-        `Inbox: -Box Size: ${data[3]["box_data"]}, MaxBoxSize: ${data[3]["max_box_data"]}-Num of Messages: ${data[3]["curr_mess"]}, MaxMessages: ${data[3]["max_mess"]}, MaxMessSize: ${data[3]["max_mess_size"]}`;
+    var cpuGauge = Gauge(iframeDOC.document.getElementById("GaugeMessNumI"),{
+        max: data[3]["max_mess"],
+        dialStartAngle: 180,
+        dialEndAngle: 0,
+        value: 0,
+        iewBox: "0 0 100 100",
+        value: 0,
+        label: function(value) {return (Math.round(value) + "/" + this.max);},
+    });
+
+    cpuGauge.setValueAnimated(data[3]["curr_mess"], 1);
+
+    var cpuGauge = Gauge(iframeDOC.document.getElementById("GaugeBoxSizeI"),{
+        max: Math.round(data[3]["max_box_data"]/100),
+        dialStartAngle: 0,
+        dialEndAngle: -180,
+        viewBox: "0 40 100 100",
+        value: 0,
+        label: function(value) {return (Math.round(value) + "/" + this.max);},
+    });
+
+    cpuGauge.setValueAnimated(Math.round(data[3]["box_data"]/100), 1);
+
+    /* iframeDOC.document.getElementById("inbox").innerText =
+        `Inbox: -Box Size: ${data[3]["box_data"]}, MaxBoxSize: ${data[3]["max_box_data"]}-Num of Messages: ${, MaxMessages: ${}, MaxMessSize: ${data[3]["max_mess_size"]}`;
 
     iframeDOC.document.getElementById("outbox").innerText =
         `Outbox: -Box Size: ${data[4]["box_data"]}, MaxBoxSize: ${data[4]["max_box_data"]}-Num of Messages: ${data[4]["curr_mess"]}, MaxMessages: ${data[4]["max_mess"]}, MaxMessSize: ${data[4]["max_mess_size"]}`;
-
+ */
 }
 
 ///////////////////////////////////////////////////////////////////Set the dropdonw texts
