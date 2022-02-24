@@ -1,7 +1,8 @@
 html, body {
     background-color: rgb(85, 85, 85);
     margin: 0px;
-
+    width: 100%;
+    height:100%;
     font-family: "Roboto",sans-serif;
 }
 
@@ -12,10 +13,8 @@ h1, h2{
     background-color: rgb(141, 141, 141);;
 }
 
-.Main_Common{
-    position: absolute;
-
-    top: 6%;
+.Main_Common, .Main_Inbox, .Main_Outbox{
+    position:absolute;
     width: 100%;
     height: 90%;
 
@@ -23,33 +22,22 @@ h1, h2{
     box-sizing: border-box;
     border:solid;
     border-radius: 2px;
+}
+
+.Main_Common{
+    top: 6%;
+
     border-color:blue;
 }
 
 .Main_Inbox{
-    position: absolute;
-
     top:96%;
-    width: 100%;
-    height: 90%;
 
-    background-color:rgb(85, 85, 85);
-    box-sizing: border-box;
-    border-style: groove;
-    border-radius: 2px;
     border-color:lightgreen;
 }
 
 .Main_Outbox{
-    position: absolute;
-
     top:186%;
-    width: 100%;
-    height: 90%;
 
-    background-color:rgb(85, 85, 85);
-    box-sizing: border-box;
-    border-style: groove;
-    border-radius: 2px;
     border-color: red;
 }

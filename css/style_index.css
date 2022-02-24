@@ -8,11 +8,11 @@ h5,
 h6 {
     font-family: "Roboto",sans-serif;
     overflow: hidden;
-
+    height:100%;
 }
 
 .main {
-    position: fixed;
+    position:relative;
     padding-top: 43px;
 
     border: 0px;

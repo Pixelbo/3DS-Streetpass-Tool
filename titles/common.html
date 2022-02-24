@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
     <div id="titleNavbar" class="title-navbar">
         <a href="#box" style="background-color: rgb(100, 0, 0);">Box Information</a><!-- common infos: common.html#box-->
         <a href="#game" onclick="load_game(window.parent.window.titleID)">Game tool</a> <!-- Sets iframe to {title}.html-->
@@ -49,9 +50,23 @@
             <input type="time" id="time_received" name="time_received" value="" step="1">
         </div>
 
-    
-        <p id="inbox"></p>
-        <p id="outbox"></p>
+        <table style="width:100%">
+            <tr>
+              <th>Company</th>
+              <th>Contact</th>
+            </tr>
+            <tr>
+              <td>
+                <p id="inbox"></p>
+                
+              </td>
+              <td>
+                <p id="outbox"></p>
+              </td>
+            </tr>
+          </table>
+
+
     </div>
 
     <div id="Main_Inbox" class="Main_Inbox">
