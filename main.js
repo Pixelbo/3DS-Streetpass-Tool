@@ -10,7 +10,7 @@ function createWindow() {
     darkTheme: true,
     show: false,
     webPreferences: {
-      preload: path.join(__dirname, '/libs/preload.js'),
+      preload: path.join(__dirname, '/libs/NODEjs/preload.js'),
       webviewTag: true,
     }
   })

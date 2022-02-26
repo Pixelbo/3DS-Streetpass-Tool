@@ -250,7 +250,7 @@ function get_mess_info(game_id, id, IorO){
             reading.reverse_endian(reading.readHex(file_data, 0x68, 0x1, true))
         ],
     };
-    
+
     return [mess_id, mess_size, send_method, unopen, isnew, timestamp_sent, timestamp_created];
 }
 
@@ -261,17 +261,21 @@ function set_input_info(game_id, id){
     var date_accessed = data[5]["year"].toString() +"-"+ ("0" + (data[5]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[5]["date"][1]).toString()).slice(-2);
     var time_accessed = ("0" + data[5]["time"][0].toString()).slice(-2) + ":" + ("0" + data[5]["time"][1].toString()).slice(-2) + ":" + ("0" + data[5]["time"][2].toString()).slice(-2);
 
-    var date_received = data[6]["year"].toString() +"-"+ ("0" + (data[6]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[6]["date"][1]).toString()).slice(-2);
-    var time_received = ("0" + data[6]["time"][0].toString()).slice(-2) + ":" + ("0" + data[6]["time"][1].toString()).slice(-2) + ":" + ("0" + data[6]["time"][2].toString()).slice(-2);
+    var date_created = data[6]["year"].toString() +"-"+ ("0" + (data[6]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[6]["date"][1]).toString()).slice(-2);
+    var time_created = ("0" + data[6]["time"][0].toString()).slice(-2) + ":" + ("0" + data[6]["time"][1].toString()).slice(-2) + ":" + ("0" + data[6]["time"][2].toString()).slice(-2);
 
     iframeDOC.document.getElementById("date_accessedI").setAttribute("value", date_accessed);
     iframeDOC.document.getElementById("time_accessedI").setAttribute("value", time_accessed);
 
-    iframeDOC.document.getElementById("date_createdI").setAttribute("value", date_received);
-    iframeDOC.document.getElementById("time_createdI").setAttribute("value", time_received);
+    iframeDOC.document.getElementById("date_createdI").setAttribute("value", date_created);
+    iframeDOC.document.getElementById("time_createdI").setAttribute("value", time_created);
 
     iframeDOC.document.getElementById("in_messID").innerText =  " " + data[0].toString(16).toUpperCase();
     
+    if(iframeDOC.document.getElementById("GaugeMessSizeI").children[1]){
+        iframeDOC.document.getElementById("GaugeMessSizeI").removeChild(iframeDOC.document.getElementById("GaugeMessSizeI").children[1]);
+    }
+
     var GaugeMessNumI = Gauge(iframeDOC.document.getElementById("GaugeMessSizeI"),{
         max: Math.round(window.max_inmess_size/1000),
         dialStartAngle: 0,
@@ -295,18 +299,22 @@ function set_output_info(game_id, id){
     var date_accessed = data[5]["year"].toString() +"-"+ ("0" + (data[5]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[5]["date"][1]).toString()).slice(-2);
     var time_accessed = ("0" + data[5]["time"][0].toString()).slice(-2) + ":" + ("0" + data[5]["time"][1].toString()).slice(-2) + ":" + ("0" + data[5]["time"][2].toString()).slice(-2);
 
-    var date_received = data[6]["year"].toString() +"-"+ ("0" + (data[6]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[6]["date"][1]).toString()).slice(-2);
-    var time_received = ("0" + data[6]["time"][0].toString()).slice(-2) + ":" + ("0" + data[6]["time"][1].toString()).slice(-2) + ":" + ("0" + data[6]["time"][2].toString()).slice(-2);
+    var date_created = data[6]["year"].toString() +"-"+ ("0" + (data[6]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[6]["date"][1]).toString()).slice(-2);
+    var time_created = ("0" + data[6]["time"][0].toString()).slice(-2) + ":" + ("0" + data[6]["time"][1].toString()).slice(-2) + ":" + ("0" + data[6]["time"][2].toString()).slice(-2);
 
     iframeDOC.document.getElementById("date_accessedO").setAttribute("value", date_accessed);
     iframeDOC.document.getElementById("time_accessedO").setAttribute("value", time_accessed);
 
-    iframeDOC.document.getElementById("date_createdO").setAttribute("value", date_received);
-    iframeDOC.document.getElementById("time_createdO").setAttribute("value", time_received);
+    iframeDOC.document.getElementById("date_createdO").setAttribute("value", date_created);
+    iframeDOC.document.getElementById("time_createdO").setAttribute("value", time_created);
 
     iframeDOC.document.getElementById("out_messID").innerText =  " " + data[0].toString(16).toUpperCase();
     
-    var GaugeMessNumI = Gauge(iframeDOC.document.getElementById("GaugeMessSizeO"),{
+    if(iframeDOC.document.getElementById("GaugeMessSizeO").children[1]){
+        iframeDOC.document.getElementById("GaugeMessSizeO").removeChild(iframeDOC.document.getElementById("GaugeMessSizeO").children[1]);
+    }
+
+    var GaugeMessNumO = Gauge(iframeDOC.document.getElementById("GaugeMessSizeO"),{
         max: Math.round(window.max_inmess_size/1000),
         dialStartAngle: 0,
         dialEndAngle: 0.01,
@@ -316,7 +324,7 @@ function set_output_info(game_id, id){
         label: function(value) {return (Math.round(value) + "/" + this.max);},
     });
 
-    GaugeMessNumI.setValueAnimated(Math.round(data[1]/1000), 1);
+    GaugeMessNumO.setValueAnimated(Math.round(data[1]/1000), 1);
 
     iframeDOC.document.getElementById("out_messUnopen").innerText = "Mess Unopen" + data[3];
     iframeDOC.document.getElementById("out_messIsnew").innerText = "Mess New" + data[4];

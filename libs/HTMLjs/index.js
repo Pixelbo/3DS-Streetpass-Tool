@@ -1,6 +1,4 @@
 //This is a "clean" js file without node that serves for changing aspect of the page when buttons are pressed
-
-
 var iframe, btn_about, btn_list;
 
 

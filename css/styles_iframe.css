@@ -4,6 +4,7 @@ body {
   margin: 0px;
   width: 100%;
   height: 100%;
+  font-size: 2vw;
   font-family: "Roboto", sans-serif !important;
 }
 
@@ -65,7 +66,7 @@ h2 {
   left: 40%;
   margin: 0;
 
-    font-size: 1.2em;
+  font-size: 2vw;
   font-family: 'Courier New', Courier, monospace;
 }
 
