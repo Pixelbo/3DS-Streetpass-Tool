@@ -4,7 +4,7 @@ body {
   margin: 0px;
   width: 100%;
   height: 100%;
-  font-size: 2vw;
+  font-size: 1.4vw;
   font-family: "Roboto", sans-serif !important;
 }
 
@@ -46,6 +46,15 @@ h2 {
   top: 186%;
 
   border-color: red;
+}
+
+.Main_Footer {
+  position:absolute;
+  bottom: 0;
+  height: 25%;
+  width: 100%;
+
+  background-color: rgb(61, 61, 61);
 }
 
 .column {
