@@ -1,37 +1,9 @@
-//File for starting the gui, nothing related to events
+/*
+This is the main file TODO: this file
+*/
 
-const { app, BrowserWindow } = require('electron')
-const path = require('path')
+var checker = require("./libs/check");
 
-function createWindow() {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    darkTheme: true,
-    show: false,
-    webPreferences: {
-      preload: path.join(__dirname, '/libs/NODEjs/preload.js'),
-      webviewTag: true,
-    }
-  })
+var CEC_path = "./CEC"
 
-  win.loadFile('index.html')
-
-  win.once('ready-to-show', () => {
-    // win.removeMenu();
-    win.maximize();
-    win.show();
-  })
-}
-
-app.whenReady().then(() => {
-  createWindow()
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
-    }
-  })
-})
-
-
-app.on('window-all-closed', () => { app.quit() })
+checker.checkCECdir(CEC_path);
