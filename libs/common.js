@@ -81,7 +81,7 @@ function get_app_info(id) {
         "curr_mess": reading.reverse_endian(reading.readHex(file_data, 0x14, 0x4, true)),
         "max_mess_size": reading.reverse_endian(reading.readHex(file_data, 0x1C, 0x4, true))
     }
-    window.max_inmess_size = inbox_infos["max_mess_size"]
+    window.max_inmess_size = inbox_infos["max_mess_size"];
 
     var file_data = reading.load_file(`${window.CECPATH}/${id}/OutboxInfo`);
 
@@ -92,6 +92,8 @@ function get_app_info(id) {
         "curr_mess": reading.reverse_endian(reading.readHex(file_data, 0x14, 0x4, true)),
         "max_mess_size": reading.reverse_endian(reading.readHex(file_data, 0x1C, 0x4, true))
     }
+    window.max_outmess_size = outbox_infos["max_mess_size"];
+
 
     return [title_id, timestamp_acessed, timestamp_received, inbox_infos, outbox_infos]
 }
@@ -106,14 +108,13 @@ function set_app_info(id) {
     var date_received = data[2]["year"].toString() +"-"+ ("0" + (data[2]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[2]["date"][1]).toString()).slice(-2);
     var time_received = ("0" + data[2]["time"][0].toString()).slice(-2) + ":" + ("0" + data[2]["time"][1].toString()).slice(-2) + ":" + ("0" + data[2]["time"][2].toString()).slice(-2);
 
-
-    iframeDOC.document.getElementById("titleID").innerText = " " + data[0];
-
     iframeDOC.document.getElementById("date_accessed").setAttribute("value", date_accessed);
     iframeDOC.document.getElementById("time_accessed").setAttribute("value", time_accessed);
 
     iframeDOC.document.getElementById("date_received").setAttribute("value", date_received);
     iframeDOC.document.getElementById("time_received").setAttribute("value", time_received);
+
+    iframeDOC.document.getElementById("titleID").innerText = " " + data[0];
 
     var GaugeMessNumI = Gauge(iframeDOC.document.getElementById("GaugeMessNumI"),{
         max: data[3]["max_mess"],
@@ -128,7 +129,7 @@ function set_app_info(id) {
     GaugeMessNumI.setValueAnimated(data[3]["curr_mess"], 1);
 
     var GaugeBoxSizeI = Gauge(iframeDOC.document.getElementById("GaugeBoxSizeI"),{
-        max: Math.round(data[3]["max_box_data"]/100),
+        max: Math.round(data[3]["max_box_data"]/1000),
         dialStartAngle: 0,
         dialEndAngle: -180,
         viewBox: "0 40 100 100",
@@ -136,7 +137,7 @@ function set_app_info(id) {
         label: function(value) {return (Math.round(value) + "/" + this.max);},
     });
 
-    GaugeBoxSizeI.setValueAnimated(Math.round(data[3]["box_data"]/100), 1);
+    GaugeBoxSizeI.setValueAnimated(Math.round(data[3]["box_data"]/1000), 1);
 
     var GaugeMessNumO = Gauge(iframeDOC.document.getElementById("GaugeMessNumO"),{
         max: data[4]["max_mess"],
@@ -151,7 +152,7 @@ function set_app_info(id) {
     GaugeMessNumO.setValueAnimated(data[4]["curr_mess"], 1);
 
     var GaugeBoxSizeO = Gauge(iframeDOC.document.getElementById("GaugeBoxSizeO"),{
-        max: Math.round(data[4]["max_box_data"]/100),
+        max: Math.round(data[4]["max_box_data"]/1000),
         dialStartAngle: 0,
         dialEndAngle: -180,
         viewBox: "0 40 100 100",
@@ -159,14 +160,7 @@ function set_app_info(id) {
         label: function(value) {return (Math.round(value) + "/" + this.max);},
     });
 
-    GaugeBoxSizeO.setValueAnimated(Math.round(data[4]["box_data"]/100), 1);
-
-    /* iframeDOC.document.getElementById("inbox").innerText =
-        `Inbox: -Box Size: ${data[3]["box_data"]}, MaxBoxSize: ${data[3]["max_box_data"]}-Num of Messages: ${, MaxMessages: ${}, MaxMessSize: ${data[3]["max_mess_size"]}`;
-
-    iframeDOC.document.getElementById("outbox").innerText =
-        `Outbox: -Box Size: ${data[4]["box_data"]}, MaxBoxSize: ${data[4]["max_box_data"]}-Num of Messages: ${data[4]["curr_mess"]}, MaxMessages: ${data[4]["max_mess"]}, MaxMessSize: ${data[4]["max_mess_size"]}`;
- */
+    GaugeBoxSizeO.setValueAnimated(Math.round(data[4]["box_data"]/1000), 1);
 }
 
 ///////////////////////////////////////////////////////////////////Set the dropdonw texts
@@ -264,61 +258,66 @@ function get_mess_info(game_id, id, IorO){
 function set_input_info(game_id, id){
     var data = get_mess_info(game_id, id, true);
 
-    var date_sent = new Date(
-        data[5]["year"],
-        data[5]["date"][0] - 1, //Cause date module begin at 0
-        data[5]["date"][1],
-        data[5]["time"][0],
-        data[5]["time"][1],
-        data[5]["time"][2]
-    );
-    var date_created = new Date(
-        data[6]["year"],
-        data[6]["date"][0] - 1, //Cause date module begin at 0
-        data[6]["date"][1],
-        data[6]["time"][0],
-        data[6]["time"][1],
-        data[6]["time"][2]
-    );
+    var date_accessed = data[5]["year"].toString() +"-"+ ("0" + (data[5]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[5]["date"][1]).toString()).slice(-2);
+    var time_accessed = ("0" + data[5]["time"][0].toString()).slice(-2) + ":" + ("0" + data[5]["time"][1].toString()).slice(-2) + ":" + ("0" + data[5]["time"][2].toString()).slice(-2);
+
+    var date_received = data[6]["year"].toString() +"-"+ ("0" + (data[6]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[6]["date"][1]).toString()).slice(-2);
+    var time_received = ("0" + data[6]["time"][0].toString()).slice(-2) + ":" + ("0" + data[6]["time"][1].toString()).slice(-2) + ":" + ("0" + data[6]["time"][2].toString()).slice(-2);
+
+    iframeDOC.document.getElementById("date_accessedI").setAttribute("value", date_accessed);
+    iframeDOC.document.getElementById("time_accessedI").setAttribute("value", time_accessed);
+
+    iframeDOC.document.getElementById("date_createdI").setAttribute("value", date_received);
+    iframeDOC.document.getElementById("time_createdI").setAttribute("value", time_received);
 
     iframeDOC.document.getElementById("in_messID").innerText =  " " + data[0].toString(16).toUpperCase();
-    iframeDOC.document.getElementById("in_messSize").innerText = "MessSize" + data[1];
-    iframeDOC.document.getElementById("in_messMethtod").innerText = "MessMethod" + data[2];
+    
+    var GaugeMessNumI = Gauge(iframeDOC.document.getElementById("GaugeMessSizeI"),{
+        max: Math.round(window.max_inmess_size/1000),
+        dialStartAngle: 0,
+        dialEndAngle: 0.01,
+        value: 0,
+        iewBox: "0 0 100 100",
+        value: 0,
+        label: function(value) {return (Math.round(value) + "/" + this.max);},
+    });
+
+    GaugeMessNumI.setValueAnimated(Math.round(data[1]/1000), 1);
+
     iframeDOC.document.getElementById("in_messUnopen").innerText = "Mess Unopen" + data[3];
     iframeDOC.document.getElementById("in_messIsnew").innerText = "Mess New" + data[4];
-
-    iframeDOC.document.getElementById("in_messSent").innerText = "Date accessed: " + date_sent.toDateString();
-    iframeDOC.document.getElementById("in_messCreated").innerText = "Date opened: " + date_created.toDateString();
-
 }
 
 ///////////////////////////////////////////////////////////////////Set the info about the output square
 function set_output_info(game_id, id){
     var data = get_mess_info(game_id, id, false);
-    
-    var date_sent = new Date(
-        data[5]["year"],
-        data[5]["date"][0] - 1, //Cause date module begin at 0
-        data[5]["date"][1],
-        data[5]["time"][0],
-        data[5]["time"][1],
-        data[5]["time"][2]
-    );
-    var date_created = new Date(
-        data[6]["year"],
-        data[6]["date"][0] - 1, //Cause date module begin at 0
-        data[6]["date"][1],
-        data[6]["time"][0],
-        data[6]["time"][1],
-        data[6]["time"][2]
-    );
 
-    iframeDOC.document.getElementById("out_messID").innerText = " " + data[0].toString(16).toUpperCase();
-    iframeDOC.document.getElementById("out_messSize").innerText = "MessSize" + data[1];
-    iframeDOC.document.getElementById("out_messMethtod").innerText = "MessMethod" + data[2];
+    var date_accessed = data[5]["year"].toString() +"-"+ ("0" + (data[5]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[5]["date"][1]).toString()).slice(-2);
+    var time_accessed = ("0" + data[5]["time"][0].toString()).slice(-2) + ":" + ("0" + data[5]["time"][1].toString()).slice(-2) + ":" + ("0" + data[5]["time"][2].toString()).slice(-2);
+
+    var date_received = data[6]["year"].toString() +"-"+ ("0" + (data[6]["date"][0]-1).toString()).slice(-2) + "-" + ("0" + (data[6]["date"][1]).toString()).slice(-2);
+    var time_received = ("0" + data[6]["time"][0].toString()).slice(-2) + ":" + ("0" + data[6]["time"][1].toString()).slice(-2) + ":" + ("0" + data[6]["time"][2].toString()).slice(-2);
+
+    iframeDOC.document.getElementById("date_accessedO").setAttribute("value", date_accessed);
+    iframeDOC.document.getElementById("time_accessedO").setAttribute("value", time_accessed);
+
+    iframeDOC.document.getElementById("date_createdO").setAttribute("value", date_received);
+    iframeDOC.document.getElementById("time_createdO").setAttribute("value", time_received);
+
+    iframeDOC.document.getElementById("out_messID").innerText =  " " + data[0].toString(16).toUpperCase();
+    
+    var GaugeMessNumI = Gauge(iframeDOC.document.getElementById("GaugeMessSizeO"),{
+        max: Math.round(window.max_inmess_size/1000),
+        dialStartAngle: 0,
+        dialEndAngle: 0.01,
+        value: 0,
+        iewBox: "0 0 100 100",
+        value: 0,
+        label: function(value) {return (Math.round(value) + "/" + this.max);},
+    });
+
+    GaugeMessNumI.setValueAnimated(Math.round(data[1]/1000), 1);
+
     iframeDOC.document.getElementById("out_messUnopen").innerText = "Mess Unopen" + data[3];
     iframeDOC.document.getElementById("out_messIsnew").innerText = "Mess New" + data[4];
-
-    iframeDOC.document.getElementById("out_messSent").innerText = "Date accessed: " + date_sent.toDateString();
-    iframeDOC.document.getElementById("out_messCreated").innerText = "Date opened: " + date_created.toDateString();
 }

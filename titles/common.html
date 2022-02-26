@@ -81,24 +81,67 @@
     <div id="Main_Inbox" class="Main_Inbox">
         <h2>Inbox Information, ID: <ins id="in_messID"></ins> </h2>
 
-        <p id="in_messSize"></p>
-        <p id="in_messMethtod"></p>
-        <p id="in_messUnopen"></p>
-        <p id="in_messIsnew"></p>
-        <p id="in_messSent"></p>
-        <p id="in_messCreated"></p>
+        <div style="display:flex; justify-content: left; align-items: center">
+            <p style="margin: 3px;"> Message last accesed the </p>
+            <input type="date" id="date_accessedI" name="date_accessedI" value="" min="2000-01-01" max="2100-12-31">
+            <p style="margin: 3px;"> at </p>
+            <input type="time" id="time_accessedI" name="time_accessedI" value="" step="1">
+        </div>
+
+        <div style="display:flex; justify-content: left; align-items: center">
+            <p style="margin: 3px;"> Message created the </p>
+            <input type="date" id="date_createdI" name="date_receivedI" value="" min="2000-01-01" max="2100-12-31">
+            <p style="margin: 3px;"> at </p>
+            <input type="time" id="time_createdI" name="time_receivedI" value="" step="1">
+        </div>
+
+        
+        <div class="row">
+            <div class="column">
+
+                <div id="GaugeMessSizeI" class="gauge-container" >
+                    <h3 class="GaugeTextAlign" style="top: 60%;">Message count</h3>
+                </div>
+            </div>
+            <div class="column">
+                <p id="in_messUnopen"></p>
+                <p id="in_messIsnew"></p>
+            </div>
+        </div>
+
+
     </div>
 
     <div id="Main_Outbox" class="Main_Outbox">
         <h2>Outbox Information, ID: <ins id="out_messID"></ins> </h2>
 
-        <p id="out_messID"></p>
-        <p id="out_messSize"></p>
-        <p id="out_messMethtod"></p>
-        <p id="out_messUnopen"></p>
-        <p id="out_messIsnew"></p>
-        <p id="out_messSent"></p>
-        <p id="out_messCreated"></p>
+        <div style="display:flex; justify-content: left; align-items: center">
+            <p style="margin: 3px;"> Message last accesed the </p>
+            <input type="date" id="date_accessedO" name="date_accessedO" value="" min="2000-01-01" max="2100-12-31">
+            <p style="margin: 3px;"> at </p>
+            <input type="time" id="time_accessedO" name="time_accessedO" value="" step="1">
+        </div>
+
+        <div style="display:flex; justify-content: left; align-items: center">
+            <p style="margin: 3px;"> Message created the </p>
+            <input type="date" id="date_createdO" name="date_receivedO" value="" min="2000-01-01" max="2100-12-31">
+            <p style="margin: 3px;"> at </p>
+            <input type="time" id="time_createdO" name="time_receivedO" value="" step="1">
+        </div>
+
+        
+        <div class="row">
+            <div class="column">
+
+                <div id="GaugeMessSizeO" class="gauge-container" >
+                    <h3 class="GaugeTextAlign" style="top: 60%;">Message count</h3>
+                </div>
+            </div>
+            <div class="column">
+                <p id="out_messUnopen"></p>
+                <p id="out_messIsnew"></p>
+            </div>
+        </div>
     </div>
 </body>
 
