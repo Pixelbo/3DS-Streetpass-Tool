@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "cli-color": "^2.0.1",
     "inquirer": "^8.2.0",
     "inquirer-date-prompt": "^2.0.1"
   }
