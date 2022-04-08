@@ -28,4 +28,5 @@ workspace.code-workspace
 node_modules/
 jsconfig.json
 CEC/
-
+CECbckp/
+.vscode/
